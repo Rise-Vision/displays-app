@@ -110,39 +110,6 @@ describe('controller: displays list', function() {
 
   });
   
-  describe('switch company: ',function(){
-    it('should reset list and re-load the list w/ new company id',function(done){
-      companyId = 'new_company_id';
-      $scope.$digest();
-
-      expect($scope.loadingDisplays).to.be.true;
-      setTimeout(function(){
-        expect($scope.loadingDisplays).to.be.false;
-        expect($scope.error).to.not.be.ok;
-        expect(apiCount).to.equal(2);
-        expect($scope.displays.list).to.have.length(20);
-        
-        done();
-      },10);
-    });
-        
-    it('should set error if list fails to load',function(done){
-      returnDisplays = false;
-      companyId = 'new_company_id';
-      $scope.$digest();
-      
-      expect($scope.loadingDisplays).to.be.true;
-      setTimeout(function(){
-        expect($scope.loadingDisplays).to.be.false;
-        expect($scope.error).to.be.ok;
-        expect(apiCount).to.equal(2);
-        expect($scope.displays.list).to.have.length(0);
-        
-        done();
-      },10);
-    });
-  });
-  
   describe('list functions: ',function(){
     returnDisplays = true;
     
@@ -241,6 +208,22 @@ describe('controller: displays list', function() {
         
         expect($scope.search.sortBy).to.equal('name');
         expect($scope.search.reverse).to.be.false;
+        
+        done();
+      },10);
+    });
+    
+    it('should set error if list fails to load',function(done){
+      returnDisplays = false;
+      $scope.doSearch();
+      $scope.$digest();
+      
+      expect($scope.loadingDisplays).to.be.true;
+      setTimeout(function(){
+        expect($scope.loadingDisplays).to.be.false;
+        expect($scope.error).to.be.ok;
+        expect(apiCount).to.equal(2);
+        expect($scope.displays.list).to.have.length(0);
         
         done();
       },10);

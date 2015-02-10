@@ -29,7 +29,8 @@ angular.module('risevision.displaysApp.controllers')
 
           display.list($scope.search, $scope.displays.cursor)
             .then(function (result) {
-              $scope.displays.add(result.items, result.cursor);
+              $scope.displays.add(result.items ? result.items : [],
+                result.cursor);
             })
             .then(null, function (e) {
               $scope.error =
@@ -40,6 +41,7 @@ angular.module('risevision.displaysApp.controllers')
             });
         }
       };
+
       load();
 
       $scope.sortBy = function (cat) {
@@ -70,17 +72,7 @@ angular.module('risevision.displaysApp.controllers')
           }
         }
       };
-
-      $scope.$watch(userState.getSelectedCompanyId, function (newID,
-        oldID) {
-        if (newID && oldID && newID !== oldID) {
-          $scope.displays.clear();
-
-          //changed company, force a reload of the ticket list
-          load();
-        }
-      });
-
+      
       $scope.navigate = function (path, event) {
         event.preventDefault();
 
