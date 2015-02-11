@@ -76,7 +76,7 @@ gulp.task("html", ["lint"], function () {
   return gulp.src(['./index.html'])
      .pipe(usemin({
       js: [uglify({
-         mangle:true,
+         mangle:false,
          outSourceMap: false // source map generation doesn't seem to function correctly
        })]
     }))
