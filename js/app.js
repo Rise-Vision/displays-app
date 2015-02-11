@@ -22,27 +22,27 @@ angular.module('risevision.displaysApp', [
           templateUrl: 'partials/displays-list.html',
           controller: 'displaysList',
           resolve: {
-            loggedInUser: function(userState) {
+            loggedInUser: ['userState', function(userState) {
               return userState.authenticate(false);
-            }
+            }]
           }
         })
         .when('/display', {
           templateUrl: 'partials/display-add.html',
           controller: 'displayAdd',
           resolve: {
-            loggedInUser: function(userState) {
+            loggedInUser: ['userState', function(userState) {
               return userState.authenticate(false);
-            }
+            }]
           }
         })
         .when('/display/:displayId', {
           templateUrl: 'partials/display-details.html',
           controller: 'displayDetails',
           resolve: {
-            loggedInUser: function(userState) {
+            loggedInUser: ['userState', function(userState) {
               return userState.authenticate(false);
-            }
+            }]
           }
         })
         .otherwise({
