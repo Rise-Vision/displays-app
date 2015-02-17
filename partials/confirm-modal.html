@@ -1,8 +1,9 @@
 <form id="confirmForm">
   <div class="modal-header">
-    <button type="button" class="close" ng-click="cancel()" data-dismiss="modal" aria-hidden="true">
+    <button type="button" class="close" ng-click="dismiss()" data-dismiss="modal" aria-hidden="true">
       <i class="fa fa-times"></i>
     </button>
+    <h3 class="modal-title" translate>{{confirmationTitle}}</h3>
   </div>
   <div class="modal-body">
     <p translate>{{confirmationMessage}}</p>
@@ -12,7 +13,7 @@
       <span translate="{{confirmationButton}}"></span> <i class="fa fa-white fa-check icon-right"></i>
     </button>
     <button class="btn btn-default btn-fixed-width" ng-click="cancel()">
-      <span translate="common.cancel"></span> <i class="fa fa-white fa-times icon-right"></i>
+      <span translate="{{cancelButton}}"></span> <i class="fa fa-white fa-times icon-right"></i>
     </button>
   </div>
 </form>

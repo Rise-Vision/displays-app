@@ -22,27 +22,33 @@ angular.module('risevision.displaysApp', [
           templateUrl: 'partials/displays-list.html',
           controller: 'displaysList',
           resolve: {
-            loggedInUser: ['userState', function(userState) {
-              return userState.authenticate(false);
-            }]
+            loggedInUser: ['userState',
+              function (userState) {
+                return userState.authenticate(false);
+              }
+            ]
           }
         })
         .when('/display', {
           templateUrl: 'partials/display-add.html',
           controller: 'displayAdd',
           resolve: {
-            loggedInUser: ['userState', function(userState) {
-              return userState.authenticate(false);
-            }]
+            loggedInUser: ['userState',
+              function (userState) {
+                return userState.authenticate(false);
+              }
+            ]
           }
         })
         .when('/display/:displayId', {
           templateUrl: 'partials/display-details.html',
           controller: 'displayDetails',
           resolve: {
-            loggedInUser: ['userState', function(userState) {
-              return userState.authenticate(false);
-            }]
+            loggedInUser: ['userState',
+              function (userState) {
+                return userState.authenticate(false);
+              }
+            ]
           }
         })
         .otherwise({
@@ -56,14 +62,22 @@ angular.module('risevision.displaysApp', [
       // the routeProvider doesn't reload. As a workaround, redirecting to 
       // an unregistered path, which will redirect back to '/' and reload
       // the controller
-      var _gotoRootAndRestoreState = function() {
+      var _gotoRootAndRestoreState = function () {
         $location.path('/sign-out');
       };
-      
+
       $rootScope.$on('risevision.user.signedOut', function () {
         //redirect to root when the user signs out
         _gotoRootAndRestoreState();
       });
+
+      $rootScope.$watch(function () {
+        return userState.getSelectedCompanyId();
+      }, function (newVal, oldVal) {
+        if (newVal && oldVal && $location.path() !== '/') {
+          $location.path('/');
+        }
+      }, true);
     }
   ])
   .config(['showErrorsConfigProvider',

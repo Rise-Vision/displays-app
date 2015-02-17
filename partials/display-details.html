@@ -1,11 +1,24 @@
-<ng-include src="'partials/home.html'"></ng-include>
+<div class="app-header add-bottom add-top">
+  <div class="title-block">
+    <!-- App Title -->
+    <h1 translate>displays-app.title</h1>
+  </div>
+
+  <div class="global-actions no-breadcrumb">
+    <button ng-click="addDisplay()"
+      class="btn btn-lg btn-primary">
+      <i class="fa fa-plus"></i> 
+      {{ 'displays-app.actions.new' | translate }}
+    </button>
+  </div>
+</div>
 
 <div rv-spinner rv-spinner-key="display-loader" rv-spinner-start-active="0"></div>
 
 <div class="display-settings">
   <form role="form" name="displayDetails" class="displayDetails">
     
-    <display-fields display-id="displayId" display="display"></display-fields>
+    <display-fields></display-fields>
 
     <div ng-show="submitError" class="alert alert-danger" role="alert">
       <strong translate>displays-app.details.error </strong>{{submitError}}
