@@ -8,6 +8,7 @@ angular.module('risevision.displaysApp', [
   'ui.bootstrap',
   'ui.bootstrap.showErrors',
   'dotdotdot-angular',
+  'risevision.displaysApp.config',
   'risevision.displaysApp.services',
   'risevision.displaysApp.controllers',
   'risevision.displaysApp.filters',
