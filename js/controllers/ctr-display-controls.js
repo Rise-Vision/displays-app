@@ -47,12 +47,14 @@ angular.module('risevision.displaysApp.controllers')
           controller: 'confirmInstance',
           windowClass: 'modal-custom',
           resolve: {
+            confirmationTitle: function () {
+              return 'displays-app.fields.controls.' + mode + '.title';
+            },
             confirmationMessage: function () {
               return 'displays-app.fields.controls.' + mode + '.warning';
             },
-            confirmationButton: function () {
-              return 'common.ok';
-            }
+            confirmationButton: null,
+            cancelButton: null
           }
         });
 

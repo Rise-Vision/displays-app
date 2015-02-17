@@ -2,17 +2,24 @@
 
 angular.module('risevision.displaysApp.controllers')
   .controller('confirmInstance', ['$scope', '$modalInstance',
-    'confirmationMessage', 'confirmationButton',
-    function ($scope, $modalInstance, confirmationMessage,
-      confirmationButton) {
+    'confirmationTitle', 'confirmationMessage', 'confirmationButton',
+    'cancelButton',
+    function ($scope, $modalInstance, confirmationTitle, confirmationMessage,
+      confirmationButton, cancelButton) {
+      $scope.confirmationTitle = confirmationTitle;
       $scope.confirmationMessage = confirmationMessage;
-      $scope.confirmationButton = confirmationButton;
+      $scope.confirmationButton = confirmationButton ? confirmationButton :
+        'common.ok';
+      $scope.cancelButton = cancelButton ? cancelButton : 'common.cancel';
 
       $scope.ok = function () {
         $modalInstance.close();
       };
       $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
+      };
+      $scope.dismiss = function () {
+        $modalInstance.dismiss();
       };
     }
   ]);

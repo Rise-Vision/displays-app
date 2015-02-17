@@ -15,15 +15,11 @@ angular.module('risevision.displaysApp.directives')
           $scope.ismeridian = true;
 
           $scope.changed = function () {
-            ctrl.$setViewValue($scope.time);
+            ctrl.$setViewValue(timeParser.getTime($scope.time));
           };
 
           $scope.$watch(attrs.ngModel, function (newValue, oldValue) {
-            if (newValue instanceof Date) {
-              $scope.time = newValue;
-            } else {
-              ctrl.$setViewValue(timeParser(newValue));
-            }
+            $scope.time = timeParser.parseTime(newValue);
           });
 
         } //link()

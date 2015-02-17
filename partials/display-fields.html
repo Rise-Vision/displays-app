@@ -1,11 +1,11 @@
-<div class="form-group">
+<div class="form-group" ng-class="{'has-error': displayDetails.name.$touched && displayDetails.name.$invalid}" show-errors>
   <label class="control-label" translate>displays-app.fields.name.name</label>
   <div class="input-group custom-addon">
     <input type="text" class="form-control" placeholder="Display Name" id="name" name="name" ng-model="display.name" required>
     <span class="input-group-addon">
       <div class="form-control-static nowrap">
         <i class="fa {{display | status}} fa-circle"></i>
-        {{display.lastActivityDate | date:'d-MMM-yyyy h:mm a'}}26-Nov-2014 1:46 PM
+        {{display.lastActivityDate | date:'d-MMM-yyyy h:mm a'}}
       </div>
     </span>
   </div>
@@ -112,8 +112,12 @@
   </div>
   <time-picker ng-model="display.restartTime" ng-disabled="display.restartEnabled"></time-picker>
   <div class="checkbox">
-    <label class="control-label"><input type="checkbox" ng-model="display.monitoringEnabled"> <strong translate>displays-app.fields.monitor</strong></label> 
+    <label class="control-label"><input type="checkbox" ng-model="display.monitoringEnabled"> <strong translate>displays-app.fields.monitor.name</strong></label> 
   </div>
+</div>
+
+<div class="add-bottom" ng-controller="monitoring" ng-show="display.monitoringEnabled && !monitoringEmails">
+  <p class="add-right text-danger">{{ 'displays-app.fields.monitor.warning' | translate}}</p>
 </div>
 
 <hr ng-if="displayId"/>

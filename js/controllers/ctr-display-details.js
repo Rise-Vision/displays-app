@@ -2,18 +2,18 @@
 
 //updated url parameters to selected display status from status filter
 angular.module('risevision.displaysApp.controllers')
-  .controller('displayDetails', ['$scope', '$routeParams',
+  .controller('displayDetails', ['$scope', '$q', '$routeParams',
     'display', '$location', '$loading', '$modal', '$log',
-    function ($scope, $routeParams, display, $location,
+    function ($scope, $q, $routeParams, display, $location,
       $loading, $modal, $log) {
       $scope.displayId = $routeParams.displayId;
       $scope.savingDisplay = false;
 
       $scope.$watch('loadingDisplay', function (loading) {
         if (loading) {
-          $loading.start('displays-loader');
+          $loading.start('display-loader');
         } else {
-          $loading.stop('displays-loader');
+          $loading.stop('display-loader');
         }
       });
 
@@ -63,12 +63,16 @@ angular.module('risevision.displaysApp.controllers')
           controller: 'confirmInstance',
           windowClass: 'modal-custom',
           resolve: {
+            confirmationTitle: function () {
+              return 'displays-app.details.deleteTitle';
+            },
             confirmationMessage: function () {
               return 'displays-app.details.deleteWarning';
             },
             confirmationButton: function () {
               return 'common.delete-forever';
-            }
+            },
+            cancelButton: null
           }
         });
 
@@ -80,26 +84,73 @@ angular.module('risevision.displaysApp.controllers')
         });
       };
 
+      $scope.addDisplay = function () {
+        if (!$scope.displayDetails.$dirty) {
+          $location.path('display');
+        } else {
+          $scope.modalInstance = $modal.open({
+            templateUrl: 'partials/confirm-modal.html',
+            controller: 'confirmInstance',
+            windowClass: 'modal-custom',
+            resolve: {
+              confirmationTitle: function () {
+                return 'displays-app.details.unsavedTitle';
+              },
+              confirmationMessage: function () {
+                return 'displays-app.details.unsavedWarning';
+              },
+              confirmationButton: function () {
+                return 'common.save';
+              },
+              cancelButton: function () {
+                return 'common.discard';
+              }
+            }
+          });
+
+          $scope.modalInstance.result.then(function () {
+            // do what you need if user presses ok
+            $scope.save()
+              .then(function () {
+                $location.path('display');
+              });
+          }, function (value) {
+            // do what you need to do if user cancels
+            if (value) {
+              $location.path('display');
+            }
+          });
+        }
+      };
+
       $scope.save = function () {
+        var deferred = $q.defer();
+
         if (!$scope.displayDetails.$valid) {
           $log.error('form not valid: ', $scope.displayDetails.errors);
-          return;
+          deferred.reject();
+        } else {
+          $scope.savingDisplay = true;
+
+          display.update($scope.displayId, $scope.display)
+            .then(function (displayId) {
+              if (!$scope.displayId) {
+                $location.path('displays/' + displayId);
+              }
+
+              deferred.resolve();
+            })
+            .then(null, function (e) {
+              $scope.submitError = e.message ? e.message : e.toString();
+
+              deferred.reject();
+            })
+            .finally(function () {
+              $scope.savingDisplay = false;
+            });
         }
 
-        $scope.savingDisplay = true;
-
-        display.update($scope.displayId, $scope.display)
-          .then(function (displayId) {
-            if (!$scope.displayId) {
-              $location.path('displays/' + displayId);
-            }
-          })
-          .then(null, function (e) {
-            $scope.submitError = e.message ? e.message : e.toString();
-          })
-          .finally(function () {
-            $scope.savingDisplay = false;
-          });
+        return deferred.promise;
       };
 
     }

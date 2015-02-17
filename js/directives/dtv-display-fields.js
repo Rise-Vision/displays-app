@@ -6,10 +6,6 @@ angular.module('risevision.displaysApp.directives')
     function (COUNTRIES, REGIONS_CA, REGIONS_US, TIMEZONES) {
       return {
         restrict: 'E',
-        scope: {
-          display: '=',
-          displayId: '=?'
-        },
         templateUrl: 'partials/display-fields.html',
         link: function ($scope) {
           $scope.countries = COUNTRIES;
