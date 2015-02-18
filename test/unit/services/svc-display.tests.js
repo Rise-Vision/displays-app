@@ -90,7 +90,9 @@ describe('service: display:', function() {
                 obj.data.id = "display1"
                 
                 def.resolve({
-                  item: obj.data
+                  result: {
+                    item: obj.data
+                  }
                 });
               } else {
                 def.reject("API Failed");
@@ -107,7 +109,9 @@ describe('service: display:', function() {
                 expect(obj.data).to.have.property("name");
                 
                 def.resolve({
-                  item: obj.data
+                  result: {
+                    item: obj.data
+                  }
                 });
               } else {
                 def.reject("API Failed");

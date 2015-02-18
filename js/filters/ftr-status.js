@@ -10,7 +10,7 @@ angular.module('risevision.displaysApp.filters')
         if (display.blockExpiryDate) {
           return 'blocked';
         } else if (display.lastConnectionDate) {
-          if (display.playerStatus !== 0) {
+          if (display.playerErrorCode !== 0) {
             return 'error';
           } else if (display.connected) {
             return 'online';

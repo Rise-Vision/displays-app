@@ -35,7 +35,7 @@ angular.module('risevision.displaysApp.controllers')
         display.add($scope.display)
           .then(function (resp) {
             if (resp && resp.item && resp.item.id) {
-              $location.path('displays/' + resp.item.id);
+              $location.path('display/' + resp.item.id);
             }
           })
           .then(null, function (e) {

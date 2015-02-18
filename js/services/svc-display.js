@@ -7,7 +7,7 @@ angular.module('risevision.displaysApp.services')
     'name', 'status', 'useCompanyAddress', 'addressDescription', 'street',
     'unit', 'city', 'province', 'country', 'postalCode', 'timeZoneOffset',
     'restartEnabled', 'restartTime', 'monitoringEnabled',
-    'browserUpgradeMode', 'width', 'height'
+    'browserUpgradeMode', 'width', 'height', 'orientation'
   ])
   .service('display', ['$q', '$log', 'coreAPILoader', 'userState',
     'pick', 'DISPLAY_WRITABLE_FIELDS',
@@ -77,7 +77,7 @@ angular.module('risevision.displaysApp.services')
           })
             .then(function (resp) {
               $log.debug('added display', resp);
-              deferred.resolve(resp);
+              deferred.resolve(resp.result);
             })
             .then(null, function (e) {
               $log.error('Failed to add display.', e);
@@ -101,7 +101,7 @@ angular.module('risevision.displaysApp.services')
           })
             .then(function (resp) {
               $log.debug('update display resp', resp);
-              deferred.resolve(resp);
+              deferred.resolve(resp.result);
             })
             .then(null, function (e) {
               $log.error('Failed to update display.', e);

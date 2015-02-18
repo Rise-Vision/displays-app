@@ -27,7 +27,7 @@ describe('filter: status', function() {
   it('should show offline display',function() {
     var display = {
       lastConnectionDate: 'Jan1',
-      playerStatus: 0
+      playerErrorCode: 0
     };
     expect(status(display)).to.equal("offline");
   });
@@ -35,7 +35,7 @@ describe('filter: status', function() {
   it('should show online display',function() {
     var display = {
       lastConnectionDate: 'Jan1',
-      playerStatus: 0,
+      playerErrorCode: 0,
       connected: 1
     };
     expect(status(display)).to.equal("online");
@@ -44,7 +44,7 @@ describe('filter: status', function() {
   it('should show error display',function() {
     var display = {
       lastConnectionDate: 'Jan1',
-      playerStatus: 0,
+      playerErrorCode: 0,
       connected: 0
     };
     expect(status(display)).to.equal("offline");
