@@ -18,9 +18,7 @@ angular.module('risevision.displaysApp.services')
         list: function (search, cursor) {
           var deferred = $q.defer();
 
-          var query = search.query ? 'name: ~\'' + search.query + '\'' :
-            'companyId: ' +
-            userState.getSelectedCompanyId();
+          var query = search.query ? 'name: ~\'' + search.query + '\'' : '';
 
           var obj = {
             'companyId': userState.getSelectedCompanyId(),
