@@ -3,9 +3,9 @@
   <div class="input-group custom-addon">
     <input type="text" class="form-control" placeholder="Display Name" id="name" name="name" ng-model="display.name" required>
     <span class="input-group-addon">
-      <div class="form-control-static nowrap">
+      <div class="form-control-static nowrap" ng-if="displayId">
         <i class="fa {{display | status}} fa-circle"></i>
-        {{display.lastActivityDate | date:'d-MMM-yyyy h:mm a'}}
+        {{display.lastConnectionDate | date:'d-MMM-yyyy h:mm a'}}
       </div>
     </span>
   </div>
@@ -165,7 +165,7 @@
 </div>
 
 <div class="add-bottom" ng-show="displayId && !display.playerVersion">
-  <p class="add-right text-danger">{{ 'displays-app.fields.player.playerWarning' | translate}}</p>
+  <p class="add-right text-danger" translate>displays-app.fields.player.playerWarning</p>
 </div>
 
 <div ng-show="displayId">
@@ -176,12 +176,12 @@
   
   <div class="form-group form-inline">
     <label class="control-label" translate>displays-app.fields.player.ipAddress</label>
-    <div class="form-control-static">192.168.0.1</div>
+    <div class="form-control-static">{{display.ip}}</div>
   </div>
   
   <div class="form-group form-inline">
     <label class="control-label" translate>displays-app.fields.player.operatingSystem</label>
-    <div class="form-control-static">N/A</div>
+    <div class="form-control-static">{{display.os}}</div>
   </div>
   
   <div class="form-group form-inline">
@@ -196,24 +196,36 @@
   
   <div class="form-group form-inline">
     <label class="control-label" translate>displays-app.fields.player.playerVersion</label>
-    <div class="form-control-static">N/A</div>
+    <div class="form-control-static">{{(display.playerName ? display.playerName + " " : "") + (display.playerVersion ? display.playerVersion : "")}}</div>
   </div>
   
   <div class="form-group form-inline">
     <label class="control-label" translate>displays-app.fields.player.viewerVersion</label>
-    <div class="form-control-static">1-06-035</div>
+    <div class="form-control-static">{{display.viewerVersion}}</div>
   </div>
   
-  <div class="form-group form-inline">
-    <label class="control-label" translate>displays-app.fields.player.playerUpgrade.name</label>
-    <select class="form-control">
-      <option translate>displays-app.fields.player.playerUpgrade.autoUpgrade</option>
+  <div class="form-group form-inline" ng-show="display.recommendedBrowserVersion">
+    <label class="control-label" translate>displays-app.fields.player.browser.upgrade.name</label>
+    <select class="form-control" ng-model="display.browserUpgradeMode" integer-parser ng-disabled="!display.playerName && !display.playerVersion">
+      <option value="0" translate>displays-app.fields.player.browser.upgrade.autoUpgrade</option>
+      <option value="2" translate>displays-app.fields.player.browser.upgrade.current</option>
+      <option value="3" translate>displays-app.fields.player.browser.upgrade.previous</option>
+      <option value="1" translate>displays-app.fields.player.browser.upgrade.userManaged</option>
     </select>
   </div>
   
+  <div class="add-bottom" ng-show="display.browserUpgradeMode !== 0">
+    <p class="add-right text-danger" translate>displays-app.fields.player.browser.upgrade.warning</p>
+  </div>
+
+  <div class="form-group form-inline" ng-show="display.browserUpgradeMode !== 0">
+    <label class="control-label" translate>displays-app.fields.player.browser.recommended</label>
+    <div class="form-control-static">{{display.recommendedBrowserVersion}}</div>
+  </div>
+  
   <div class="form-group form-inline">
-    <label class="control-label" translate>displays-app.fields.player.installedBrowser</label>
-    <div class="form-control-static">N/A</div>
+    <label class="control-label" translate>displays-app.fields.player.browser.installed</label>
+    <div class="form-control-static">{{(display.browserName ? display.browserName + " " : "") + (display.browserVersion ? display.browserVersion : "")}}</div>
   </div>      
 </div>  
 
