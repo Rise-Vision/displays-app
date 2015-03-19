@@ -18,5 +18,4 @@
 
   angular.module('risevision.displaysApp.config', []);
 
-
 })(angular);
