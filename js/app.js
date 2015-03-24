@@ -4,6 +4,8 @@ angular.module('risevision.displaysApp', [
   'ngRoute',
   'risevision.common.header',
   'risevision.common.header.templates',
+  'risevision.common.components.last-modified',
+  'risevision.common.components.tag-selector',
   'ngTouch',
   'ui.bootstrap',
   'ui.bootstrap.showErrors',
