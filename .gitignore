@@ -1,4 +1,5 @@
 .idea/
+*.iml
 *.keystore
 *.sw*
 .DS_Store
