@@ -31,6 +31,7 @@ deployment:
       - if [ "$(git log -1 --pretty=%B | grep '\[.*\]' |sed -e 's/.*\[\(.*\)\].*/\1/g')" == '' ]; then echo "stage deployment environment missing. Add a tag such as [stage-0] to the commit message."; exit 1; fi
       - NODE_ENV=test npm run build
       - echo "deploying to $(git log -1 --pretty=%B | grep '\[.*\]' |sed -e 's/.*\[\(.*\)\].*/\1/g')";
+      - ssh displays@webserver-stage.risevision.com 'mkdir -p /rise-front-end/displays';
       - rsync -rptz -e ssh --delete dist displays@webserver-stage.risevision.com:/rise-front-end/displays/$(git log -1 --pretty=%B | grep '\[.*\]' |sed -e 's/.*\[\(.*\)\].*/\1/g')
       - tar czvf dist.tar.gz dist
   production:
@@ -38,6 +39,12 @@ deployment:
     owner: Rise-Vision
     commands:
       - NODE_ENV=prod npm run build
-      - echo "deploying to production";
-      - rsync -rptz -e ssh --delete dist displays@webserver.risevision.com:/rise-front-end/displays
+      # It deploys first to production server 2.
+      - echo "deploying to production webserver1.risevision.com";
+      - ssh displays@webserver1.risevision.com 'mkdir -p /rise-front-end/displays';
+      - rsync -rptz -e ssh --delete dist displays@webserver1.risevision.com:/rise-front-end/displays;
+      # It then deploys to production server 1.
+      - echo "deploying to production webserver.risevision.com";
+      - ssh displays@webserver.risevision.com 'mkdir -p /rise-front-end/displays';
+      - rsync -rptz -e ssh --delete dist displays@webserver.risevision.com:/rise-front-end/displays;
       - tar czvf dist.tar.gz dist
