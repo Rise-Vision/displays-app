@@ -26,26 +26,34 @@ describe('filter: status', function() {
 
   it('should show offline display',function() {
     var display = {
-      lastConnectionDate: 'Jan1',
+      lastActivityDate: 'Jan1',
       playerErrorCode: 0
     };
     expect(status(display)).to.equal("offline");
   });
   
+  it('should show error display',function() {
+    var display = {
+      lastActivityDate: 'Jan1',
+      playerErrorCode: 1
+    };
+    expect(status(display)).to.equal("error");
+  });
+  
   it('should show online display',function() {
     var display = {
-      lastConnectionDate: 'Jan1',
+      lastActivityDate: 'Jan1',
       playerErrorCode: 0,
-      connected: 1
+      onlineStatus: "online"
     };
     expect(status(display)).to.equal("online");
   });
   
   it('should show error display',function() {
     var display = {
-      lastConnectionDate: 'Jan1',
+      lastActivityDate: 'Jan1',
       playerErrorCode: 0,
-      connected: 0
+      onlineStatus: "offline"
     };
     expect(status(display)).to.equal("offline");
   });

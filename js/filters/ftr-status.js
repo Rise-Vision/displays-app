@@ -9,11 +9,11 @@ angular.module('risevision.displaysApp.filters')
       } else {
         if (display.blockExpiryDate) {
           return 'blocked';
-        } else if (display.lastConnectionDate) {
-          if (display.playerErrorCode !== 0) {
+        } else if (display.onlineStatus === 'online') {
+          return 'online';
+        } else if (display.lastActivityDate) {
+          if (display.playerErrorCode && display.playerErrorCode !== 0) {
             return 'error';
-          } else if (display.connected) {
-            return 'online';
           } else {
             return 'offline';
           }
