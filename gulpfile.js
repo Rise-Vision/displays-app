@@ -126,11 +126,9 @@ gulp.task('build', function (cb) {
 /*---- testing ----*/
 
 var unitTestFiles = [
-  "bower_components/jQuery/dist/jquery.js",
-
   "bower_components/angular/angular.js",
+  "bower_components/angular-mocks/angular-mocks.js",
   "bower_components/q/q.js",
-   "bower_components/angular-mocks/angular-mocks.js",
   "bower_components/common-header/dist/js/dependencies.js",
   "bower_components/common-header/dist/js/common-header.js",
   "bower_components/moment/moment.js",
