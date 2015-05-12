@@ -5,11 +5,11 @@
   </div>
 
   <div class="global-actions no-breadcrumb">
-    <a ng-href="#display"
+    <button ui-sref="display.add"
       class="btn btn-lg btn-primary">
       <i class="fa fa-plus"></i> 
       {{ 'displays-app.actions.new' | translate }}
-    </a>
+    </button>
   </div>
 </div>
 
@@ -45,7 +45,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr class="clickable-row" ng-repeat="display in displays.list" ui-sref="displaysettings" ng-click="navigate('/display/{{display.id}}', $event)">
+        <tr class="clickable-row" ng-repeat="display in displays.list" ui-sref="display.details({displayId: display.id})">
           <td class="col-sm-9"><strong>{{display.name}}</strong></td>
           <td class="col-sm-1 text-center"><span class="add-left"><i class="fa {{display | status}} fa-circle"></i></span></td>
           <td class="col-sm-2 hidden-xs text-right nowrap">{{display.lastActivityDate | date:'d-MMM-yyyy h:mm a'}}</td>

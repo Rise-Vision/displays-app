@@ -1,7 +1,5 @@
 'use strict';
 
-/*jshint camelcase: false */
-
 angular.module('risevision.displaysApp.services')
   .service('timeParser', [
 

@@ -75,7 +75,6 @@ describe('controller: displays list', function() {
     expect($scope.sortBy).to.be.a('function');
     expect($scope.doSearch).to.be.a('function');
     expect($scope.load).to.be.a('function');
-    expect($scope.navigate).to.be.a('function');
   });
 
   it('should init the scope objects',function(){

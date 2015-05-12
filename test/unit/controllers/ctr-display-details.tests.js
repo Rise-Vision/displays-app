@@ -36,19 +36,19 @@ describe('controller: display details', function() {
         }
       }
     });
-    $provide.service('$routeParams',function(){
+    $provide.service('$stateParams',function(){
       return {
         displayId: 'abcd1234'
       }
     });
-    $provide.service('$location',function(){
+    $provide.service('$state',function(){
       return {
-        _path : '',
-        path : function(path){
-          if (path){
-            this._path = path;
+        _state : '',
+        go : function(state, params){
+          if (state){
+            this._state = state;
           }
-          return this._path;
+          return this._state;
         }
       }
     });
@@ -70,7 +70,7 @@ describe('controller: display details', function() {
       }
     });
   }));
-  var $scope, userState, $location, updateDisplay, confirmDelete;
+  var $scope, userState, $state, updateDisplay, confirmDelete;
   beforeEach(function(){
     userState = function(){
       return {
@@ -87,13 +87,13 @@ describe('controller: display details', function() {
     };
     inject(function($injector,$rootScope, $controller){
       $scope = $rootScope.$new();
-      $location = $injector.get('$location');
+      $state = $injector.get('$state');
       $controller('displayDetails', {
         $scope : $scope,
         userState : $injector.get('userState'),
         display:$injector.get('display'),
         $modal:$injector.get('$modal'),
-        $location : $location,
+        $state : $state,
         $log : $injector.get('$log')});
       $scope.$digest();
     });
@@ -149,7 +149,7 @@ describe('controller: display details', function() {
       $scope.displayDetails.$valid = true;
       $scope.save();
       setTimeout(function(){
-        expect($location._path).to.be.empty;
+        expect($state._state).to.be.empty;
         expect($scope.savingDisplay).to.be.false;
         expect($scope.submitError).to.be.ok;
         done();
@@ -166,7 +166,7 @@ describe('controller: display details', function() {
       $scope.confirmDelete();
       
       expect($scope.loadingDisplay).to.be.false;
-      expect($location._path).to.be.empty;
+      expect($state._state).to.be.empty;
     });
     
     it('should delete the display',function(done){
@@ -176,7 +176,7 @@ describe('controller: display details', function() {
       $scope.confirmDelete();
       setTimeout(function(){
         expect($scope.loadingDisplay).to.be.false;
-        expect($location._path).to.equal('#/');
+        expect($state._state).to.equal('display.list');
         done();
       },10);
     });
@@ -187,7 +187,7 @@ describe('controller: display details', function() {
       
       $scope.confirmDelete();
       setTimeout(function(){
-        expect($location._path).to.be.empty;
+        expect($state._state).to.be.empty;
         expect($scope.loadingDisplay).to.be.false;
         expect($scope.submitError).to.be.ok;
         done();

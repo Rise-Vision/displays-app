@@ -2,11 +2,11 @@
 
 //updated url parameters to selected display status from status filter
 angular.module('risevision.displaysApp.controllers')
-  .controller('displayDetails', ['$scope', '$q', '$routeParams',
-    'display', '$location', '$loading', '$modal', '$log',
-    function ($scope, $q, $routeParams, display, $location,
+  .controller('displayDetails', ['$scope', '$q', '$state', '$stateParams',
+    'display', '$loading', '$modal', '$log',
+    function ($scope, $q, $state, $stateParams, display,
       $loading, $modal, $log) {
-      $scope.displayId = $routeParams.displayId;
+      $scope.displayId = $stateParams.displayId;
       $scope.savingDisplay = false;
 
       $scope.$watch('loadingDisplay', function (loading) {
@@ -47,7 +47,7 @@ angular.module('risevision.displaysApp.controllers')
           .then(function (result) {
             $scope.display = result.item;
 
-            $location.path('#/');
+            $state.go('display.list');
           })
           .then(null, function (e) {
             $scope.submitError = e.message ? e.message : e.toString();
@@ -86,7 +86,7 @@ angular.module('risevision.displaysApp.controllers')
 
       $scope.addDisplay = function () {
         if (!$scope.displayDetails.$dirty) {
-          $location.path('display');
+          $state.go('display.add');
         } else {
           $scope.modalInstance = $modal.open({
             templateUrl: 'partials/confirm-modal.html',
@@ -112,12 +112,12 @@ angular.module('risevision.displaysApp.controllers')
             // do what you need if user presses ok
             $scope.save()
               .then(function () {
-                $location.path('display');
+                $state.go('display.add');
               });
           }, function (value) {
             // do what you need to do if user cancels
             if (value) {
-              $location.path('display');
+              $state.go('display.add');
             }
           });
         }
@@ -134,10 +134,6 @@ angular.module('risevision.displaysApp.controllers')
 
           display.update($scope.displayId, $scope.display)
             .then(function (displayId) {
-              if (!$scope.displayId) {
-                $location.path('displays/' + displayId);
-              }
-
               deferred.resolve();
             })
             .then(null, function (e) {
