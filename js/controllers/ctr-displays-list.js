@@ -12,7 +12,6 @@ angular.module('risevision.displaysApp.controllers')
         sortBy: 'name',
         count: DB_MAX_COUNT,
         reverse: false,
-        tags: []
       }, $location.search());
 
       $scope.$watch('loadingDisplays', function (loading) {

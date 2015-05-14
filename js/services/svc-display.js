@@ -6,7 +6,7 @@ angular.module('risevision.displaysApp.services')
   .constant('DISPLAY_WRITABLE_FIELDS', [
     'name', 'status', 'useCompanyAddress', 'addressDescription', 'street',
     'unit', 'city', 'province', 'country', 'postalCode', 'timeZoneOffset',
-    'tags', 'restartEnabled', 'restartTime', 'monitoringEnabled',
+    'restartEnabled', 'restartTime', 'monitoringEnabled',
     'browserUpgradeMode', 'width', 'height', 'orientation'
   ])
   .service('display', ['$q', '$log', 'coreAPILoader', 'userState',

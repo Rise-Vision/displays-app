@@ -96,11 +96,6 @@
   </div>
 </div><!--display address-->
 
-<div class="add-top">
-  <label class="control-label">Lookup Tags</label>
-  <tag-textbox tags="display.tags"></tag-textbox>
-</div>
-
 <div class="form-group reboot-time">
   <div class="checkbox">
     <label class="control-label"><input type="checkbox" ng-model="display.restartEnabled"> <strong translate>displays-app.fields.reboot</strong></label> 
@@ -223,11 +218,3 @@
     <div class="form-control-static">{{(display.browserName ? display.browserName + " " : "") + (display.browserVersion ? display.browserVersion : "")}}</div>
   </div>      
 </div>  
-
-
-<script type="text/ng-template" id="lookupModal">
-  <div class="modal-header">
-    <h3 class="modal-title">Lookup Tags</h3>
-  </div>
-  <ng-include src="'partials/lookup.html'"></ng-include>
-</script>
