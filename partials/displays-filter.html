@@ -1,21 +1,4 @@
 <div class="input-group">
   <span class="input-group-addon" ng-click="doSearch()"><i class="fa fa-search"></i></span>
   <input type="text" class="form-control" placeholder="{{ 'displays-app.list.filter.placeholder' | translate }}" ng-model="search.query" ng-enter="doSearch()">
-  <span class="input-group-btn">
-    <button class="btn btn-default" type="button" ng-click="isCollapsed = !isCollapsed">
-      <i class="fa fa-filter"></i> 
-      {{ 'displays-app.list.filter.filters' | translate }}
-    </button>
-  </span>
 </div>
-
-<div ng-show="isCollapsed" class="content-box content-box-filters">
-  
-  <div id="lookup-filter">
-    
-    <div class="form-group">
-      <label class="control-label">Filter by Lookup Tag</label>
-      <tag-textbox tags="search.tags"></tag-textbox>
-    </div>
-    
-  </div><!--lookup-filter-->
