@@ -37,6 +37,8 @@ describe('service: display:', function() {
           display: {
             list: function(obj){
               expect(obj).to.be.ok;
+              
+              searchString = obj.search;
 
               var def = Q.defer();
               if (returnList) {
@@ -167,9 +169,10 @@ describe('service: display:', function() {
     });
 
   }));
-  var display, returnList;
+  var display, returnList, searchString;
   beforeEach(function(){
     returnList = true;
+    searchString = '';
     
     inject(function($injector){  
       display = $injector.get('display');
@@ -194,6 +197,16 @@ describe('service: display:', function() {
         expect(result).to.be.truely;
         expect(result.items).to.be.an.array;
         expect(result.items).to.have.length.above(0);
+        done();
+      })
+      .then(null,done);
+    });
+    
+    it('should output a proper search string',function(done){
+      display.list({query: 'str'})
+      .then(function(result){
+        expect(searchString).to.equal('name:~\'str\' OR id:~\'str\' OR street:~\'str\' OR unit:~\'str\' OR city:~\'str\' OR province:~\'str\' OR country:~\'str\' OR postalCode:~\'str\'');
+
         done();
       })
       .then(null,done);
