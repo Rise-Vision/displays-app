@@ -5,6 +5,8 @@ angular.module('risevision.displaysApp', [
   'risevision.common.header',
   'risevision.common.header.templates',
   'risevision.common.components.last-modified',
+  'risevision.common.components.search-filter',
+  'risevision.common.components.scrolling-list',
   'ngTouch',
   'ui.bootstrap',
   'ui.bootstrap.showErrors',

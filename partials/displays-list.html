@@ -13,11 +13,11 @@
   </div>
 </div>
 
-<displays-filter></displays-filter> 
+<search-filter filter-config="filterConfig" search="search" do-search="doSearch"></search-filter> 
   
 <div class="content-box half-top">
   <div class="list-group scrollable-list"
-  rv-scroll-event="handleScroll($event, isEndEvent)"
+  scrolling-list="load()"
   rv-spinner rv-spinner-key="displays-list-loader"
   rv-spinner-start-active="1"
   >

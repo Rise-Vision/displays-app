@@ -14,6 +14,10 @@ angular.module('risevision.displaysApp.controllers')
         reverse: false,
       }, $location.search());
 
+      $scope.filterConfig = {
+        placeholder: '{{ "displays-app.list.filter.placeholder" | translate }}'
+      };
+
       $scope.$watch('loadingDisplays', function (loading) {
         if (loading) {
           $loading.start('displays-list-loader');
@@ -22,7 +26,7 @@ angular.module('risevision.displaysApp.controllers')
         }
       });
 
-      var load = function () {
+      $scope.load = function () {
         if (!$scope.displays.list.length || !$scope.displays.endOfList &&
           $scope.displays.cursor) {
           $scope.loadingDisplays = true;
@@ -42,7 +46,7 @@ angular.module('risevision.displaysApp.controllers')
         }
       };
 
-      load();
+      $scope.load();
 
       $scope.sortBy = function (cat) {
         $scope.displays.clear();
@@ -53,24 +57,13 @@ angular.module('risevision.displaysApp.controllers')
           $scope.search.reverse = !$scope.search.reverse;
         }
 
-        load();
+        $scope.load();
       };
 
       $scope.doSearch = function () {
         $scope.displays.clear();
 
-        load();
-      };
-
-      $scope.handleScroll = function (event, isEndEvent) {
-        // $log.debug(event.target.scrollTop + ' / ' + event.target.scrollHeight + ' / ' + isEndEvent);
-        if (isEndEvent) {
-          if ((event.target.scrollHeight - event.target.clientHeight -
-            event.target.scrollTop) < 20) {
-            //load more rows if less than 20px left to the bottom
-            load();
-          }
-        }
+        $scope.load();
       };
 
       $scope.navigate = function (path, event) {
