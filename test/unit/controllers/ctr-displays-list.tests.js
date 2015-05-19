@@ -74,7 +74,7 @@ describe('controller: displays list', function() {
 
     expect($scope.sortBy).to.be.a('function');
     expect($scope.doSearch).to.be.a('function');
-    expect($scope.handleScroll).to.be.a('function');
+    expect($scope.load).to.be.a('function');
     expect($scope.navigate).to.be.a('function');
   });
 
@@ -113,12 +113,12 @@ describe('controller: displays list', function() {
   describe('list functions: ',function(){
     returnDisplays = true;
     
-    describe('handleScroll: ',function(){
+    describe('load: ',function(){
       it('should re-load if there are more items',function(done){
         result = {
           items: [21],
         };
-        $scope.handleScroll(scrollEvent, true);
+        $scope.load();
         $scope.$digest();
         
         expect($scope.loadingDisplays).to.be.true;
@@ -139,12 +139,12 @@ describe('controller: displays list', function() {
         result = {
           items: [21],
         };
-        $scope.handleScroll(scrollEvent, true);
+        $scope.load();
         $scope.$digest();
         
         expect($scope.loadingDisplays).to.be.true;
         setTimeout(function(){
-          $scope.handleScroll(scrollEvent, true);
+          $scope.load();
           
           expect($scope.loadingDisplays).to.be.false;
                     
