@@ -155,7 +155,7 @@
 </div>
 
 <div class="add-bottom" ng-show="displayId && !display.playerVersion">
-  <p class="add-right text-danger" translate>displays-app.fields.player.playerWarning</p>
+  <p class="add-right text-danger" translate translate-values="{displayId: displayId}">displays-app.fields.player.playerWarning</p>
 </div>
 
 <div ng-show="displayId">
@@ -175,12 +175,12 @@
   </div>
   
   <div class="form-group form-inline">
-    <label class="control-label" translate>displays-app.fields.player.orientation</label>
+    <label class="control-label" translate>displays-app.fields.player.orientation.name</label>
     <select class="form-control" ng-model="display.orientation" integer-parser>
-      <option>0</option>
-      <option>90</option>
-      <option>180</option>
-      <option>270</option>
+      <option value="0" translate>displays-app.fields.player.orientation.0</option>
+      <option value="90" translate>displays-app.fields.player.orientation.90</option>
+      <option value="180" translate>displays-app.fields.player.orientation.180</option>
+      <option value="270" translate>displays-app.fields.player.orientation.270</option>
     </select>
   </div>
   
