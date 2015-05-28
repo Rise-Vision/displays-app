@@ -9,16 +9,33 @@ angular.module('risevision.displaysApp.services')
     'restartEnabled', 'restartTime', 'monitoringEnabled',
     'browserUpgradeMode', 'width', 'height', 'orientation'
   ])
+  .constant('DISPLAY_SEARCH_FIELDS', [
+    'name', 'id', 'street', 'unit', 'city', 'province', 'country',
+    'postalCode'
+  ])
   .service('display', ['$q', '$log', 'coreAPILoader', 'userState',
-    'pick', 'DISPLAY_WRITABLE_FIELDS',
+    'pick', 'DISPLAY_WRITABLE_FIELDS', 'DISPLAY_SEARCH_FIELDS',
     function ($q, $log, coreAPILoader, userState, pick,
-      DISPLAY_WRITABLE_FIELDS) {
+      DISPLAY_WRITABLE_FIELDS, DISPLAY_SEARCH_FIELDS) {
+
+      var createSearchQuery = function (fields, search) {
+        var query = '';
+
+        for (var i in fields) {
+          query += 'OR ' + fields[i] + ':~\'' + search + '\' ';
+        }
+
+        query = query ? query.substring(3) : '';
+
+        return query.trim();
+      };
 
       var service = {
         list: function (search, cursor) {
           var deferred = $q.defer();
 
-          var query = search.query ? 'name: ~\'' + search.query + '\'' : '';
+          var query = search.query ?
+            createSearchQuery(DISPLAY_SEARCH_FIELDS, search.query) : '';
 
           var obj = {
             'companyId': userState.getSelectedCompanyId(),
