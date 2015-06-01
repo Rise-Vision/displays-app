@@ -66,10 +66,5 @@ angular.module('risevision.displaysApp.controllers')
         $scope.load();
       };
 
-      $scope.navigate = function (path, event) {
-        event.preventDefault();
-
-        $location.path(path);
-      };
     }
   ]);

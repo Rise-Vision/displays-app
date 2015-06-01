@@ -12,15 +12,16 @@ angular.module('risevision.displaysApp.directives')
           $scope.regionsCA = REGIONS_CA;
           $scope.regionsUS = REGIONS_US;
           $scope.timezones = TIMEZONES;
-          
-          $scope.isChromeOs = function(display) {
+
+          $scope.isChromeOs = function (display) {
             return display && display.os && display.os.indexOf('cros') !== -1;
           };
-          
-          $scope.canReboot = function(display) {
+
+          $scope.canReboot = function (display) {
             // Cannot reboot Linux/Windows/Mac PackagedApp players
-            return $scope.isChromeOs(display) && display.playerName != "RisePlayerPackagedApp";
-          }
+            return $scope.isChromeOs(display) && display.playerName !==
+              'RisePlayerPackagedApp';
+          };
         } //link()
       };
     }

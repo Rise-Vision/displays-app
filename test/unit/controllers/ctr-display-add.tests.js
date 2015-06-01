@@ -12,7 +12,7 @@ describe('controller: display add', function() {
           var deferred = Q.defer();
           if(updateDisplay){
             this._display = display;
-            deferred.resolve(displayId);
+            deferred.resolve({item: display});
           }else{
             deferred.reject('ERROR; could not create display');
           }
@@ -20,19 +20,19 @@ describe('controller: display add', function() {
         }
       }
     });
-    $provide.service('$location',function(){
+    $provide.service('$state',function(){
       return {
-        _path : '',
-        path : function(path){
-          if (path){
-            this._path = path;
+        _state : '',
+        go : function(state, params){
+          if (state){
+            this._state = state;
           }
-          return this._path;
+          return this._state;
         }
       }
     });
   }));
-  var $scope, userState, $location, updateDisplay, confirmDelete;
+  var $scope, userState, $state, updateDisplay, confirmDelete;
   beforeEach(function(){
     updateDisplay = true;
     
@@ -51,12 +51,12 @@ describe('controller: display add', function() {
     };
     inject(function($injector,$rootScope, $controller){
       $scope = $rootScope.$new();
-      $location = $injector.get('$location');
+      $state = $injector.get('$state');
       $controller('displayAdd', {
         $scope : $scope,
         userState : $injector.get('userState'),
         display:$injector.get('display'),
-        $location : $location,
+        $state : $state,
         $log : $injector.get('$log')});
       $scope.$digest();
     });
@@ -96,7 +96,9 @@ describe('controller: display add', function() {
     $scope.save();
     expect($scope.savingDisplay).to.be.true;
     setTimeout(function(){
+      expect($state._state).to.equal('display.details');
       expect($scope.savingDisplay).to.be.false;
+      expect($state.submitError).to.not.be.ok;
       done();
     },10);
   });
@@ -109,7 +111,7 @@ describe('controller: display add', function() {
     $scope.displayDetails.$valid = true;
     $scope.save();
     setTimeout(function(){
-      expect($location._path).to.be.empty;
+      expect($state._state).to.be.empty;
       expect($scope.savingDisplay).to.be.false;
       expect($scope.submitError).to.be.ok;
       done();

@@ -1,5 +1,5 @@
-<div class="form-group" ng-class="{'has-error': displayDetails.name.$touched && displayDetails.name.$invalid}" show-errors>
-  <label class="control-label" translate>displays-app.fields.name.name</label>
+<div class="form-group" ng-class="{'has-error': !displayDetails.name.$pristine && displayDetails.name.$invalid}" show-errors>
+  <label class="control-label">{{'displays-app.fields.name.name' | translate}} *</label>
   <div class="input-group custom-addon">
     <input type="text" class="form-control" placeholder="Display Name" id="name" name="name" ng-model="display.name" required focus-me="!displayId">
     <span class="input-group-addon">
@@ -9,7 +9,7 @@
       </div>
     </span>
   </div>
-  <p class="text-danger" ng-show="displayDetails.name.$touched && displayDetails.name.$error.required" translate>
+  <p class="text-danger" ng-show="!displayDetails.name.$pristine && displayDetails.name.$error.required" translate>
     displays-app.fields.name.required
   </p>
 </div>

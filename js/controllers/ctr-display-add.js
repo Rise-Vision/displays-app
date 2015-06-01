@@ -2,9 +2,9 @@
 
 //updated url parameters to selected display status from status filter
 angular.module('risevision.displaysApp.controllers')
-  .controller('displayAdd', ['$scope', 'display', '$location', '$loading',
+  .controller('displayAdd', ['$scope', '$state', 'display', '$loading',
     '$log',
-    function ($scope, display, $location, $loading, $log) {
+    function ($scope, $state, display, $loading, $log) {
       $scope.display = {
         'width': 1920,
         'height': 1080,
@@ -35,7 +35,9 @@ angular.module('risevision.displaysApp.controllers')
         display.add($scope.display)
           .then(function (resp) {
             if (resp && resp.item && resp.item.id) {
-              $location.path('display/' + resp.item.id);
+              $state.go('display.details', {
+                displayId: resp.item.id
+              });
             }
           })
           .then(null, function (e) {
