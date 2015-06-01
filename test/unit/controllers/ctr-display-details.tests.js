@@ -36,6 +36,11 @@ describe('controller: display details', function() {
         }
       }
     });
+    $provide.service('displayTracker', function() { 
+      return function(name) {
+        trackerCalled = name;
+      };
+    });
     $provide.service('$stateParams',function(){
       return {
         displayId: 'abcd1234'
@@ -70,8 +75,9 @@ describe('controller: display details', function() {
       }
     });
   }));
-  var $scope, userState, $state, updateDisplay, confirmDelete;
+  var $scope, userState, $state, updateDisplay, confirmDelete, trackerCalled;
   beforeEach(function(){
+    trackerCalled = undefined;
     userState = function(){
       return {
         getSelectedCompanyId : function(){
@@ -136,7 +142,9 @@ describe('controller: display details', function() {
       $scope.save();
       expect($scope.savingDisplay).to.be.true;
       setTimeout(function(){
+        expect(trackerCalled).to.equal('Display Updated');
         expect($scope.savingDisplay).to.be.false;
+        expect($scope.submitError).to.not.be.ok;
         done();
       },10);
     });
@@ -150,6 +158,7 @@ describe('controller: display details', function() {
       $scope.save();
       setTimeout(function(){
         expect($state._state).to.be.empty;
+        expect(trackerCalled).to.not.be.ok;
         expect($scope.savingDisplay).to.be.false;
         expect($scope.submitError).to.be.ok;
         done();
@@ -172,10 +181,13 @@ describe('controller: display details', function() {
     it('should delete the display',function(done){
       confirmDelete = true;
       updateDisplay = true;
+      $scope.display = {id:123};
       
       $scope.confirmDelete();
       setTimeout(function(){
         expect($scope.loadingDisplay).to.be.false;
+        expect($scope.submitError).to.not.be.ok;
+        expect(trackerCalled).to.equal('Display Deleted');
         expect($state._state).to.equal('display.list');
         done();
       },10);
@@ -188,6 +200,7 @@ describe('controller: display details', function() {
       $scope.confirmDelete();
       setTimeout(function(){
         expect($state._state).to.be.empty;
+        expect(trackerCalled).to.not.be.ok;
         expect($scope.loadingDisplay).to.be.false;
         expect($scope.submitError).to.be.ok;
         done();

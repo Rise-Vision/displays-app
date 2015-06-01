@@ -3,9 +3,11 @@
 // controls Restart/Reboot functionality
 angular.module('risevision.displaysApp.controllers')
   .controller('displayControls', ['$scope', 'display',
-    '$log', '$modal',
-    function ($scope, display, $log, $modal) {
-      var _restart = function (displayId) {
+    '$log', '$modal', 'displayTracker',
+    function ($scope, display, $log, $modal, displayTracker) {
+      $scope.displayTracker = displayTracker;
+
+      var _restart = function (displayId, displayName) {
         if (!displayId) {
           return;
         }
@@ -15,6 +17,8 @@ angular.module('risevision.displaysApp.controllers')
 
         display.restart(displayId)
           .then(function (resp) {
+            displayTracker('Display Restarted', displayId, displayName);
+
             $scope.controlsInfo =
               'displays-app.fields.controls.restart.success';
           })
@@ -23,7 +27,7 @@ angular.module('risevision.displaysApp.controllers')
           });
       };
 
-      var _reboot = function (displayId) {
+      var _reboot = function (displayId, displayName) {
         if (!displayId) {
           return;
         }
@@ -33,6 +37,8 @@ angular.module('risevision.displaysApp.controllers')
 
         display.reboot(displayId)
           .then(function (resp) {
+            displayTracker('Display Rebooted', displayId, displayName);
+
             $scope.controlsInfo =
               'displays-app.fields.controls.reboot.success';
           })
@@ -41,7 +47,7 @@ angular.module('risevision.displaysApp.controllers')
           });
       };
 
-      $scope.confirm = function (displayId, mode) {
+      $scope.confirm = function (displayId, displayName, mode) {
         $scope.modalInstance = $modal.open({
           templateUrl: 'partials/confirm-modal.html',
           controller: 'confirmInstance',
@@ -61,9 +67,9 @@ angular.module('risevision.displaysApp.controllers')
         $scope.modalInstance.result.then(function () {
           // do what you need if user presses ok
           if (mode === 'reboot') {
-            _reboot(displayId);
+            _reboot(displayId, displayName);
           } else if (mode === 'restart') {
-            _restart(displayId);
+            _restart(displayId, displayName);
           }
         }, function () {
           // do what you need to do if user cancels

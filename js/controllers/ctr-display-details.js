@@ -3,9 +3,9 @@
 //updated url parameters to selected display status from status filter
 angular.module('risevision.displaysApp.controllers')
   .controller('displayDetails', ['$scope', '$q', '$state', '$stateParams',
-    'display', '$loading', '$modal', '$log',
+    'display', '$loading', '$modal', '$log', 'displayTracker',
     function ($scope, $q, $state, $stateParams, display,
-      $loading, $modal, $log) {
+      $loading, $modal, $log, displayTracker) {
       $scope.displayId = $stateParams.displayId;
       $scope.savingDisplay = false;
 
@@ -45,6 +45,9 @@ angular.module('risevision.displaysApp.controllers')
 
         display.delete($scope.displayId)
           .then(function (result) {
+            displayTracker('Display Deleted', $scope.displayId,
+              $scope.display.name);
+
             $scope.display = result.item;
 
             $state.go('display.list');
@@ -134,6 +137,9 @@ angular.module('risevision.displaysApp.controllers')
 
           display.update($scope.displayId, $scope.display)
             .then(function (displayId) {
+              displayTracker('Display Updated', $scope.displayId,
+                $scope.display.name);
+
               deferred.resolve();
             })
             .then(null, function (e) {
