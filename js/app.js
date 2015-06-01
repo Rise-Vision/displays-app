@@ -32,6 +32,19 @@ angular.module('risevision.displaysApp', [
       template: '<div ui-view></div>'
     })
 
+    .state('display.reset', {
+      template: '',
+      url: '/reset',
+      controller: ['$timeout', '$state',
+
+        function ($timeout, $state) {
+          $timeout(function () {
+            $state.go('display.list');
+          });
+        }
+      ]
+    })
+
     .state('display.list', {
       url: '/display/list',
       templateUrl: 'partials/displays-list.html',
@@ -75,9 +88,7 @@ angular.module('risevision.displaysApp', [
   .run(['$rootScope', '$state', 'userState',
     function ($rootScope, $state, userState) {
       $rootScope.$on('risevision.user.signedOut', function () {
-        $state.go('display.list', null, {
-          reload: true
-        });
+        $state.go('display.reset');
       });
     }
   ])

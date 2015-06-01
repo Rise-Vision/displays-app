@@ -8,12 +8,11 @@ angular.module('risevision.displaysApp.services')
         userState.authenticate(false).then(function () {
           if (userState.isRiseVisionUser()) {
             deferred.resolve();
-          }
-          else {
+          } else {
             deferred.reject();
           }
         })
-        .then(null, deferred.reject);
+          .then(null, deferred.reject);
         return deferred.promise;
       };
     }
