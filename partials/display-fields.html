@@ -4,7 +4,7 @@
     <input type="text" class="form-control" placeholder="Display Name" id="name" name="name" ng-model="display.name" required focus-me="!displayId">
     <span class="input-group-addon">
       <div class="form-control-static nowrap" ng-if="displayId">
-        <i class="fa {{display | status}} fa-circle"></i>
+        <i class="fa {{display | status}} fa-circle icon-left"></i>
         {{display.lastActivityDate | date:'d-MMM-yyyy h:mm a'}}
       </div>
     </span>
@@ -26,13 +26,15 @@
   </div><!--status--> 
 </div>
 
-<div class="checkbox">
-  <label class="control-label half-top" for="address">
-    <input type="checkbox" ng-model="display.useCompanyAddress" name="address"> <strong translate>displays-app.fields.address.useCompany</strong>
-  </label>
+<div class="form-group">
+  <div class="checkbox">
+    <label class="control-label">
+      <input type="checkbox" ng-model="display.useCompanyAddress"> <strong translate>displays-app.fields.address.useCompany</strong>
+    </label>
+  </div>
 </div>
 
-<div ng-hide="display.useCompanyAddress" class="add-top">
+<div ng-hide="display.useCompanyAddress" class="add-top add-bottom">
   <div class="form-group">
     <label class="control-label" translate>displays-app.fields.address.description</label>
     <input type="text" class="form-control" ng-model="display.addressDescription">
@@ -94,6 +96,7 @@
       <option value="" translate>displays-app.fields.address.timezone.placeholder</option>
     </select>
   </div>
+  <hr>
 </div><!--display address-->
 
 <div class="form-group reboot-time">
@@ -101,13 +104,19 @@
     <label class="control-label"><input type="checkbox" ng-model="display.restartEnabled"> <strong translate>displays-app.fields.reboot</strong></label> 
   </div>
   <time-picker ng-model="display.restartTime" ng-disabled="display.restartEnabled"></time-picker>
+  
+</div>
+
+<div class="form-group">
   <div class="checkbox">
     <label class="control-label"><input type="checkbox" ng-model="display.monitoringEnabled"> <strong translate>displays-app.fields.monitor.name</strong></label> 
   </div>
 </div>
 
-<div class="add-bottom" ng-controller="monitoring" ng-show="display.monitoringEnabled && !monitoringEmails">
-  <p class="add-right text-danger">{{ 'displays-app.fields.monitor.warning' | translate}}</p>
+<div class="panel panel-info animated fadeIn" ng-controller="monitoring" ng-show="display.monitoringEnabled && !monitoringEmails">
+  <div class="panel-body">
+    <p>{{ 'displays-app.fields.monitor.warning' | translate}}</p>
+  </div>
 </div>
 
 <hr ng-if="displayId"/>
@@ -154,8 +163,10 @@
   </div> 
 </div>
 
-<div class="add-bottom" ng-show="displayId && !display.playerVersion">
-  <p class="add-right text-danger" translate translate-values="{displayId: displayId}">displays-app.fields.player.playerWarning</p>
+<div class="panel panel-info animated fadeIn" ng-show="displayId && !display.playerVersion">
+  <div class="panel-body">
+    <p class="add-right text-danger" translate translate-values="{displayId: displayId}">displays-app.fields.player.playerWarning</p>
+  </div>
 </div>
 
 <div ng-show="display.lastActivityDate">
@@ -204,8 +215,10 @@
     </select>
   </div>
   
-  <div class="add-bottom" ng-show="display.browserUpgradeMode !== 0">
-    <p class="add-right text-danger" translate>displays-app.fields.player.browser.upgrade.warning</p>
+  <div class="panel panel-info animated fadeIn" ng-show="display.browserUpgradeMode !== 0">
+    <div class="panel-body">
+      <p class="add-right text-danger" translate>displays-app.fields.player.browser.upgrade.warning</p>
+    </div>
   </div>
 
   <div class="form-group form-inline" ng-show="display.browserUpgradeMode !== 0">

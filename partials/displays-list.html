@@ -1,14 +1,14 @@
-<div class="app-header add-bottom add-top">
+<div class="app-header">
   <div class="title-block">
     <!-- App Title -->
     <h1 translate>displays-app.title</h1>
   </div>
 
-  <div class="global-actions no-breadcrumb">
+  <div class="global-actions">
     <button ui-sref="display.add"
       class="btn btn-lg btn-primary">
-      <i class="fa fa-plus"></i> 
       {{ 'displays-app.actions.new' | translate }}
+      <i class="fa fa-plus icon-right"></i> 
     </button>
   </div>
 </div>
@@ -16,7 +16,7 @@
 <search-filter filter-config="filterConfig" search="search" do-search="doSearch"></search-filter> 
   
 <div class="content-box half-top">
-  <div class="list-group scrollable-list"
+  <div class="list-group scrollable-list auto-height"
   scrolling-list="load()"
   rv-spinner rv-spinner-key="displays-list-loader"
   rv-spinner-start-active="1"
@@ -46,7 +46,7 @@
       </thead>
       <tbody>
         <tr class="clickable-row" ng-repeat="display in displays.list" ui-sref="display.details({displayId: display.id})">
-          <td class="col-sm-9"><strong>{{display.name}}</strong></td>
+          <td class="col-sm-9">{{display.name}}</td>
           <td class="col-sm-1 text-center"><span class="add-left"><i class="fa {{display | status}} fa-circle"></i></span></td>
           <td class="col-sm-2 hidden-xs text-right nowrap">{{display.lastActivityDate | date:'d-MMM-yyyy h:mm a'}}</td>
         </tr>
