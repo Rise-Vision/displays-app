@@ -90,6 +90,14 @@ angular.module('risevision.displaysApp', [
       $rootScope.$on('risevision.user.signedOut', function () {
         $state.go('display.reset');
       });
+
+      $rootScope.$on('risevision.company.selectedCompanyChanged', function () {
+        if ($state.current.name === 'display.list') {
+          $state.go($state.current.name, null, {
+            reload: true
+          });
+        }
+      });
     }
   ])
   .config(['showErrorsConfigProvider',
