@@ -32,13 +32,13 @@ angular.module('risevision.displaysApp', [
       template: '<div ui-view></div>'
     })
 
-    .state('display.reset', {
+    .state('display.root', {
       template: '',
-      url: '/reset',
-      controller: ['$timeout', '$state',
+      url: '/',
+      controller: ['canAccessDisplays', '$state',
 
-        function ($timeout, $state) {
-          $timeout(function () {
+        function (canAccessDisplays, $state) {
+          canAccessDisplays().then(function () {
             $state.go('display.list');
           });
         }
@@ -88,11 +88,12 @@ angular.module('risevision.displaysApp', [
   .run(['$rootScope', '$state', 'userState',
     function ($rootScope, $state, userState) {
       $rootScope.$on('risevision.user.signedOut', function () {
-        $state.go('display.reset');
+        $state.go('display.root');
       });
 
       $rootScope.$on('risevision.company.selectedCompanyChanged', function () {
-        if ($state.current.name === 'display.list') {
+        if ($state.current.name === 'display.list' ||
+          $state.current.name === 'display.root') {
           $state.go($state.current.name, null, {
             reload: true
           });
