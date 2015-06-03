@@ -39,6 +39,7 @@ describe('service: display:', function() {
               expect(obj).to.be.ok;
               
               searchString = obj.search;
+              sortString = obj.sort;
 
               var def = Q.defer();
               if (returnList) {
@@ -122,8 +123,7 @@ describe('service: display:', function() {
             },
             delete: function(obj) {
               expect(obj).to.be.ok;
-              expect(obj.id).to.equal('display1');
-              
+
               var def = Q.defer();
               if (obj.id) {
                 def.resolve({
@@ -136,8 +136,7 @@ describe('service: display:', function() {
             },
             restart: function(obj) {
               expect(obj).to.be.ok;
-              expect(obj.id).to.equal('display1');
-              
+
               var def = Q.defer();
               if (obj.id) {
                 def.resolve({
@@ -150,8 +149,7 @@ describe('service: display:', function() {
             },
             reboot: function(obj) {
               expect(obj).to.be.ok;
-              expect(obj.id).to.equal('display1');
-              
+
               var def = Q.defer();
               if (obj.id) {
                 def.resolve({
@@ -169,10 +167,11 @@ describe('service: display:', function() {
     });
 
   }));
-  var display, returnList, searchString;
+  var display, returnList, searchString, sortString;
   beforeEach(function(){
     returnList = true;
     searchString = '';
+    sortString='';
     
     inject(function($injector){  
       display = $injector.get('display');
@@ -202,14 +201,44 @@ describe('service: display:', function() {
       .then(null,done);
     });
     
-    it('should output a proper search string',function(done){
-      display.list({query: 'str'})
+    it('should create an empty searchString if query is empty',function(done){
+      display.list({})
       .then(function(result){
-        expect(searchString).to.equal('name:~\'str\' OR id:~\'str\' OR street:~\'str\' OR unit:~\'str\' OR city:~\'str\' OR province:~\'str\' OR country:~\'str\' OR postalCode:~\'str\'');
+        expect(searchString).to.equal('');
 
         done();
       })
       .then(null,done);
+    });
+
+    it('should set sort to be desc if reverse option is passed',function(done){
+      display.list({sortBy: 'anyThing', reverse: true})
+        .then(function(result){
+          expect(sortString).to.equal('anyThing desc');
+
+          done();
+        })
+        .then(null,done);
+    });
+
+    it('should set sort to be asc if reverse option is not passed',function(done){
+      display.list({sortBy: 'anyThing'})
+        .then(function(result){
+          expect(sortString).to.equal('anyThing asc');
+
+          done();
+        })
+        .then(null,done);
+    });
+
+    it('should output a proper search string',function(done){
+      display.list({query: 'str'})
+        .then(function(result){
+          expect(searchString).to.equal('name:~\'str\' OR id:~\'str\' OR street:~\'str\' OR unit:~\'str\' OR city:~\'str\' OR province:~\'str\' OR country:~\'str\' OR postalCode:~\'str\'');
+
+          done();
+        })
+        .then(null,done);
     });
     
     it("should handle failure to get list correctly",function(done){
@@ -337,38 +366,80 @@ describe('service: display:', function() {
       .then(null,done);
     });
   });
-  
-  it('should delete a display',function(done){
-    display.delete('display1')
-    .then(function(result){
-      expect(result).to.be.truely;
-      expect(result.item).to.be.truely;
-      
-      done();
-    })
-    .then(null,done);
+
+  describe('delete:',function(){
+    it('should delete a display',function(done){
+      display.delete('display1')
+        .then(function(result){
+          expect(result).to.be.truely;
+          expect(result.item).to.be.truely;
+
+          done();
+        })
+        .then(null,done);
+    });
+
+    it("should handle failure to delete display",function(done){
+      display.delete()
+        .then(function(result) {
+          done(result);
+        })
+        .then(null, function(error) {
+          expect(error).to.deep.equal('API Failed');
+          done();
+        })
+        .then(null,done);
+    });
   });
 
-  it('should restart a display',function(done){
-    display.restart('display1')
-    .then(function(result){
-      expect(result).to.be.truely;
-      expect(result.item).to.be.truely;
-      
-      done();
-    })
-    .then(null,done);
+  describe('restart:',function(){
+    it('should restart a display',function(done){
+      display.restart('display1')
+        .then(function(result){
+          expect(result).to.be.truely;
+          expect(result.item).to.be.truely;
+
+          done();
+        })
+        .then(null,done);
+    });
+
+    it("should handle failure to restart display",function(done){
+      display.restart()
+        .then(function(result) {
+          done(result);
+        })
+        .then(null, function(error) {
+          expect(error).to.deep.equal('API Failed');
+          done();
+        })
+        .then(null,done);
+    });
   });
-  
-  it('should reboot a display',function(done){
-    display.reboot('display1')
-    .then(function(result){
-      expect(result).to.be.truely;
-      expect(result.item).to.be.truely;
-      
-      done();
-    })
-    .then(null,done);
+
+
+  describe('reboot', function(){
+    it('should reboot a display',function(done){
+      display.reboot('display1')
+        .then(function(result){
+          expect(result).to.be.truely;
+          expect(result.item).to.be.truely;
+
+          done();
+        })
+        .then(null,done);
+    });
+
+    it("should handle failure to reboot display",function(done){
+      display.reboot()
+        .then(function(result) {
+          done(result);
+        })
+        .then(null, function(error) {
+          expect(error).to.deep.equal('API Failed');
+          done();
+        })
+        .then(null,done);
+    });
   });
-  
 });

@@ -25,7 +25,7 @@ angular.module('risevision.displaysApp.services')
           query += 'OR ' + fields[i] + ':~\'' + search + '\' ';
         }
 
-        query = query ? query.substring(3) : '';
+        query = query.substring(3);
 
         return query.trim();
       };

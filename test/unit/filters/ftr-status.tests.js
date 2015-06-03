@@ -15,6 +15,12 @@ describe('filter: status', function() {
   it('should default to notinstalled if no status provide',function(){
     expect(status()).to.equal('notinstalled');
   });
+
+  it('should default to notinstalled if display does not have any attribute',function(){
+    var display = {
+    }
+    expect(status(display)).to.equal('notinstalled');
+  });
     
   it('should show blocked display',function() {
     var display = {
