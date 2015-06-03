@@ -119,38 +119,63 @@ describe('controller: display controls', function() {
     });
   });
   
-  describe('reboot: ',function(){
-    it('should return early the user does not confirm',function(){
+  describe('reboot: ',function() {
+    it('should return early the user does not confirm', function () {
       $scope.confirm('1234', 'reboot');
-      
+
       expect(functionCalled).to.not.be.ok;
     });
-    
-    it('should reboot the display',function(done){
+
+    it('should reboot the display', function (done) {
       confirmResponse = true;
       updateDisplay = true;
-      
+
       $scope.confirm('1234', 'reboot');
-      setTimeout(function(){
+      setTimeout(function () {
         expect(functionCalled).to.equal('reboot');
         expect($scope.controlsInfo).to.be.ok;
         expect($scope.controlsError).to.not.be.ok;
         done();
-      },10);
+      }, 10);
     });
-    
-    it('should show an error if fails to reboot the display',function(done){
+
+    it('should show an error if fails to reboot the display', function (done) {
       confirmResponse = true;
       updateDisplay = false;
-      
+
       $scope.confirm('1234', 'reboot');
-      setTimeout(function(){
+      setTimeout(function () {
         expect(functionCalled).to.equal('reboot');
         expect($scope.controlsInfo).to.not.be.ok;
         expect($scope.controlsError).to.be.ok;
         done();
-      },10);
+      }, 10);
+    });
+
+    it('should do nothing when calling restart with undefined display id', function (done) {
+      confirmResponse = true;
+      updateDisplay = false;
+
+      $scope.confirm(undefined, 'restart');
+      setTimeout(function () {
+        expect(functionCalled).to.not.be.ok;
+        expect($scope.controlsInfo).to.not.be.ok;
+        expect($scope.controlsError).to.not.be.ok;
+        done();
+      }, 10);
+    });
+
+    it('should do nothing when calling reboot with undefined display id', function (done) {
+      confirmResponse = true;
+      updateDisplay = false;
+
+      $scope.confirm(undefined, 'reboot');
+      setTimeout(function () {
+        expect(functionCalled).to.not.be.ok;
+        expect($scope.controlsInfo).to.not.be.ok;
+        expect($scope.controlsError).to.not.be.ok;
+        done();
+      }, 10);
     });
   });
-
 });

@@ -8,7 +8,7 @@ module.exports = function(config){
 
     autoWatch : false,
 
-    frameworks: ["mocha", "chai", "chai-as-promised"],
+    frameworks: ["mocha", "chai", "chai-as-promised", "sinon-chai"],
 
     browsers : ["PhantomJS"],
 
@@ -19,6 +19,7 @@ module.exports = function(config){
     plugins : [
             "karma-mocha",
             "karma-chai",
+            "sinon-chai",
             "karma-junit-reporter",
             "karma-coverage",
             "karma-chai-plugins",
@@ -31,7 +32,7 @@ module.exports = function(config){
 
     // optionally, configure the reporter
     coverageReporter: {
-      type : "cobertura",//for jenkins to read and display the coverage repor
+      type : "html",//for jenkins to read and display the coverage repor
     //type:'html',//set this to html for a nice human report
       dir : path.join(__dirname, "../../reports/coverage")
     },

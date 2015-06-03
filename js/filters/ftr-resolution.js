@@ -1,6 +1,6 @@
 'use strict';
 
-// Status Filter
+// Resolution Filter
 angular.module('risevision.displaysApp.filters')
   .filter('resolution', function () {
     return function (width, height) {

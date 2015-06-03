@@ -19,7 +19,7 @@
   "trailing": true,
   "smarttabs": true,
   "globals": {
-
+    "sinon": false
   },
   "predef":["angular","_"]
 }

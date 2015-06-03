@@ -31,8 +31,21 @@ describe('controller: display add', function() {
         }
       }
     });
+
+    $provide.service('$loading',function(){
+      return {
+        start : function(spinnerKeys){
+          return;
+        },
+        stop : function(spinnerKeys){
+          return;
+        }
+      }
+    });
+
+
   }));
-  var $scope, userState, $state, updateDisplay, confirmDelete;
+  var $scope, userState, $state, updateDisplay,$loading,$loadingStartSpy, $loadingStopSpy;
   beforeEach(function(){
     updateDisplay = true;
     
@@ -52,11 +65,14 @@ describe('controller: display add', function() {
     inject(function($injector,$rootScope, $controller){
       $scope = $rootScope.$new();
       $state = $injector.get('$state');
+      $loading = $injector.get('$loading');
+      $loadingStartSpy = sinon.spy($loading, 'start');
+      $loadingStopSpy = sinon.spy($loading, 'stop');
       $controller('displayAdd', {
         $scope : $scope,
-        userState : $injector.get('userState'),
-        display:$injector.get('display'),
         $state : $state,
+        display: $injector.get('display'),
+        $loading: $loading,
         $log : $injector.get('$log')});
       $scope.$digest();
     });
@@ -95,10 +111,13 @@ describe('controller: display add', function() {
     $scope.display = {id:123};
     $scope.save();
     expect($scope.savingDisplay).to.be.true;
+    $scope.$digest();
+    $loadingStartSpy.should.have.been.calledWith('displays-loader');
     setTimeout(function(){
       expect($state._state).to.equal('display.details');
       expect($scope.savingDisplay).to.be.false;
       expect($state.submitError).to.not.be.ok;
+      $loadingStopSpy.should.have.been.calledWith('displays-loader');
       done();
     },10);
   });

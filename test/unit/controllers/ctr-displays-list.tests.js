@@ -32,8 +32,19 @@ describe('controller: displays list', function() {
         }
       }
     });
+
+    $provide.service('$loading',function(){
+      return {
+        start : function(spinnerKeys){
+          return;
+        },
+        stop : function(spinnerKeys){
+          return;
+        }
+      }
+    });
   }));
-  var $scope, userState, $location, returnDisplays, companyId, apiCount, scrollEvent, result;
+  var $scope, userState, $location, returnDisplays, companyId, apiCount, scrollEvent, result, $loading,$loadingStartSpy, $loadingStopSpy;
   beforeEach(function(){
     scrollEvent = {target: {scrollHeight: 0, clientHeight: 0, scrollTop: 0}};
     result = {
@@ -58,13 +69,17 @@ describe('controller: displays list', function() {
     };
     inject(function($injector,$rootScope, $controller){
       $scope = $rootScope.$new();
+      $loading = $injector.get('$loading');
+      $loadingStartSpy = sinon.spy($loading, 'start');
+      $loadingStopSpy = sinon.spy($loading, 'stop');
       $location = $injector.get('$location');
       $controller('displaysList', {
         $scope : $scope,
         userState : $injector.get('userState'),
         display:$injector.get('display'),
         $location : $location,
-        $log : $injector.get('$log')});
+        $log : $injector.get('$log'),
+        $loading: $loading});
       $scope.$digest();  
     });
   });
@@ -121,6 +136,7 @@ describe('controller: displays list', function() {
         $scope.$digest();
         
         expect($scope.loadingDisplays).to.be.true;
+        $loadingStartSpy.should.have.been.calledWith('displays-list-loader');
         setTimeout(function(){
           expect($scope.loadingDisplays).to.be.false;
           expect($scope.error).to.not.be.ok;
@@ -129,7 +145,8 @@ describe('controller: displays list', function() {
           expect($scope.displays.list).to.have.length(21);
           expect($scope.displays.cursor).to.not.be.truely;
           expect($scope.displays.endOfList).to.be.true;
-          
+          $scope.$digest();
+          $loadingStopSpy.should.have.been.calledWith('displays-list-loader');
           done();
         },10);
       });
