@@ -103,7 +103,7 @@
   <div class="checkbox">
     <label class="control-label"><input type="checkbox" ng-model="display.restartEnabled"> <strong translate>displays-app.fields.reboot</strong></label> 
   </div>
-  <time-picker ng-model="display.restartTime" ng-disabled="display.restartEnabled"></time-picker>
+  <time-picker ng-model="display.restartTime" ng-disabled="!display.restartEnabled"></time-picker>
   
 </div>
 

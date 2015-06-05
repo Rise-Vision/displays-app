@@ -1,4 +1,6 @@
-<timepicker ng-model="time" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+<fieldset ng-disabled="disabled">
+  <timepicker ng-model="time" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+</fieldset>
 
 <script id="template/timepicker/timepicker.html" type="text/ng-template">
   <table class="time-picker">

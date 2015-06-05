@@ -7,7 +7,10 @@ angular.module('risevision.displaysApp.directives')
       return {
         restrict: 'E',
         require: 'ngModel',
-        $scope: {},
+        scope: {
+          disabled: "=ngDisabled",
+          timeString: "=ngModel"
+        },
         templateUrl: 'partials/time-picker.html',
         link: function ($scope, elm, attrs, ctrl) {
           $scope.hstep = 1;
@@ -18,7 +21,7 @@ angular.module('risevision.displaysApp.directives')
             ctrl.$setViewValue(timeParser.getTime($scope.time));
           };
 
-          $scope.$watch(attrs.ngModel, function (newValue, oldValue) {
+          $scope.$watch('timeString', function (newValue, oldValue) {
             $scope.time = timeParser.parseTime(newValue);
           });
 
