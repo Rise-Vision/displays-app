@@ -61,6 +61,15 @@ gulp.task("config", function() {
     .pipe(gulp.dest("js/config"));
 });
 
+gulp.task("config-e2e", function() {
+  var env = process.env.E2E_ENV || "dev";
+  gutil.log("Environment is", env);
+
+  return gulp.src(["test/e2e/config/" + env + ".json"])
+    .pipe(rename("config.json"))
+    .pipe(gulp.dest("test/e2e/config"));
+});
+
 gulp.task("locales", function() {
   return gulp.src(localeFiles)
     .pipe(gulp.dest("dist/locales"));
@@ -140,10 +149,12 @@ gulp.task("server", factory.testServer({https: false}));
 gulp.task("server-close", factory.testServerClose());
 gulp.task("test:webdrive_update", factory.webdriveUpdate());
 gulp.task("test:e2e:core", ["test:webdrive_update"], factory.testE2EAngular({
-  browser: "chrome"
+  browser: "chrome",
+  loginUser: process.env.E2E_USER,
+  loginPass: process.env.E2E_PASS
 }));
 gulp.task("test:e2e", function (cb) {
-  runSequence("server", "test:e2e:core", "server-close", cb);
+  runSequence("config-e2e","server", "test:e2e:core", "server-close", cb);
 });
 
 

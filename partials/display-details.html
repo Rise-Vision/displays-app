@@ -27,7 +27,7 @@
     <div class="button-row">
       <p class="visible-xs text-right"><last-modified change-date="display.changeDate" changed-by="display.changedBy"></last-modified></p>
       <!-- Indicates delete or destructive action -->
-      <button type="button" class="btn btn-danger btn-fixed-width" ng-click="confirmDelete()" ng-if="displayId">
+      <button id="deleteButton" type="button" class="btn btn-danger btn-fixed-width" ng-click="confirmDelete()" ng-if="displayId">
         {{'common.delete' | translate}} <i class="fa fa-white fa-trash-o icon-right"></i>
       </button>
       <div class="pull-right">

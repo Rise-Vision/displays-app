@@ -1,11 +1,11 @@
 <div class="app-header">
   <div class="title-block">
     <!-- App Title -->
-    <h1 translate>displays-app.title</h1>
+    <h1 id="title" translate>displays-app.title</h1>
   </div>
 
   <div class="global-actions">
-    <button ui-sref="display.add"
+    <button id="displayAddButton" ui-sref="display.add"
       class="btn btn-lg btn-primary">
       {{ 'displays-app.actions.new' | translate }}
       <i class="fa fa-plus icon-right"></i> 
@@ -21,22 +21,22 @@
   rv-spinner rv-spinner-key="displays-list-loader"
   rv-spinner-start-active="1"
   >
-    <table class="table-2 table-hover">
+    <table id="displaysListTable" class="table-2 table-hover">
       <thead>
         <tr>
-          <th class="col-sm-9" ng-click="sortBy('name')">
+          <th id="tableHeaderName" class="col-sm-9" ng-click="sortBy('name')">
             {{ 'displays-app.list.heading.name' | translate }}
             <!-- ngIf: search.sortBy == 'name' -->
             <i ng-if="search.sortBy == 'name'" class="fa ng-scope fa-long-arrow-up" ng-class="{false: 'fa-long-arrow-up', true: 'fa-long-arrow-down'}[search.reverse]"></i>
             <!-- end ngIf: search.sortBy == 'name' -->
           </th>
-          <th class="col-sm-1 text-center" ng-click="sortBy('onlineStatus')">
+          <th id="tableHeaderStatus" class="col-sm-1 text-center" ng-click="sortBy('onlineStatus')">
             {{ 'displays-app.list.heading.status' | translate }}
             <!-- ngIf: search.sortBy == 'onlineStatus' -->
             <i ng-if="search.sortBy == 'onlineStatus'" class="fa ng-scope fa-long-arrow-up" ng-class="{false: 'fa-long-arrow-up', true: 'fa-long-arrow-down'}[search.reverse]"></i>
             <!-- end ngIf: search.sortBy == 'onlineStatus' -->
           </th>
-          <th class="col-sm-2 text-right hidden-xs" ng-click="sortBy('lastActivityDate')">
+          <th id="tableHeaderActivity" class="col-sm-2 text-right hidden-xs" ng-click="sortBy('lastActivityDate')">
             {{ 'displays-app.list.heading.lastConnection' | translate }}
             <!-- ngIf: search.sortBy == 'lastActivityDate' -->
             <i ng-if="search.sortBy == 'lastActivityDate'" class="fa ng-scope fa-long-arrow-up" ng-class="{false: 'fa-long-arrow-up', true: 'fa-long-arrow-down'}[search.reverse]"></i>
