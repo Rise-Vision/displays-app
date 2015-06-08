@@ -31,7 +31,6 @@ describe('controller: display add', function() {
         }
       }
     });
-
     $provide.service('$loading',function(){
       return {
         start : function(spinnerKeys){
@@ -42,12 +41,18 @@ describe('controller: display add', function() {
         }
       }
     });
-
+    $provide.service('displayTracker', function() { 
+      return function(name) {
+        trackerCalled = name;
+      };
+    });
 
   }));
-  var $scope, userState, $state, updateDisplay,$loading,$loadingStartSpy, $loadingStopSpy;
+  var $scope, userState, $state, updateDisplay,$loading,$loadingStartSpy, $loadingStopSpy,
+  trackerCalled;
   beforeEach(function(){
     updateDisplay = true;
+    trackerCalled = undefined;
     
     userState = function(){
       return {
@@ -115,6 +120,7 @@ describe('controller: display add', function() {
     $loadingStartSpy.should.have.been.calledWith('displays-loader');
     setTimeout(function(){
       expect($state._state).to.equal('display.details');
+      expect(trackerCalled).to.equal('Display Created');
       expect($scope.savingDisplay).to.be.false;
       expect($state.submitError).to.not.be.ok;
       $loadingStopSpy.should.have.been.calledWith('displays-loader');
@@ -131,6 +137,7 @@ describe('controller: display add', function() {
     $scope.save();
     setTimeout(function(){
       expect($state._state).to.be.empty;
+      expect(trackerCalled).to.not.be.ok;
       expect($scope.savingDisplay).to.be.false;
       expect($scope.submitError).to.be.ok;
       done();

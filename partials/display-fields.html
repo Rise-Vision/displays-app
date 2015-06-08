@@ -128,15 +128,15 @@
 
 <div class="form-group" ng-show="displayId" ng-controller="displayControls">
   <div class="add-bottom hidden-xs">
-    <a ng-href="http://www.risevision.com/player/" target="_blank" class="btn btn-default">
+    <a ng-href="http://www.risevision.com/player/" target="_blank" class="btn btn-default" ng-click="displayTracker('Player Downloaded', displayId, display.name)">
       <i class="fa fa-download"></i> 
       {{ 'displays-app.fields.controls.download' | translate }}
     </a>
-    <button type="button" class="btn btn-default" ng-disabled="!display.playerVersion" ng-click="confirm(displayId, 'restart')">
+    <button type="button" class="btn btn-default" ng-disabled="!display.playerVersion" ng-click="confirm(displayId, display.name, 'restart')">
       <i class="fa fa-refresh"></i> 
       {{ 'displays-app.fields.controls.restart.name' | translate }}
     </button>
-    <button type="button" class="btn btn-default" ng-disabled="!display.playerVersion || !canReboot(display)" ng-click="confirm(displayId, 'reboot')">
+    <button type="button" class="btn btn-default" ng-disabled="!display.playerVersion || !canReboot(display)" ng-click="confirm(displayId, display.name, 'reboot')">
       <i class="fa fa-power-off"></i> 
       {{ 'displays-app.fields.controls.reboot.name' | translate }}
     </button>
@@ -146,11 +146,11 @@
       <i class="fa fa-download"></i> 
       {{ 'displays-app.fields.controls.download' | translate }}
     </a>
-    <button type="button" class="btn btn-default btn-block half-bottom" ng-disabled="!display.playerVersion" ng-click="confirm(displayId, 'restart')">
+    <button type="button" class="btn btn-default btn-block half-bottom" ng-disabled="!display.playerVersion" ng-click="confirm(displayId, display.name, 'restart')">
       <i class="fa fa-refresh"></i> 
       {{ 'displays-app.fields.controls.restart.name' | translate }}
     </button>
-    <button type="button" class="btn btn-default btn-block half-bottom" ng-disabled="!display.playerVersion || !canReboot(display)" ng-click="confirm(displayId, 'reboot')">
+    <button type="button" class="btn btn-default btn-block half-bottom" ng-disabled="!display.playerVersion || !canReboot(display)" ng-click="confirm(displayId, display.name, 'reboot')">
       <i class="fa fa-power-off"></i> 
       {{ 'displays-app.fields.controls.reboot.name' | translate }}
     </button>
@@ -158,8 +158,10 @@
   <div ng-show="controlsError" class="alert alert-danger" role="alert">
     <strong translate>displays-app.fields.controls.error </strong>{{controlsError}}
   </div> 
-  <div ng-show="controlsInfo" class="alert alert-info" role="alert">
-    <strong>{{ controlsInfo | translate }}</strong>
+  <div class="panel panel-info animated fadeIn" ng-show="controlsInfo">
+    <div class="panel-body">
+      <strong>{{ controlsInfo | translate }}</strong>
+    </div>
   </div> 
 </div>
 

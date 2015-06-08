@@ -29,6 +29,11 @@ describe('controller: display controls', function() {
         }
       }
     });
+    $provide.service('displayTracker', function() { 
+      return function(name) {
+        trackerCalled = name;
+      };
+    });
     $provide.service('$modal',function(){
       return {
         open : function(obj){
@@ -47,11 +52,13 @@ describe('controller: display controls', function() {
       }
     });
   }));
-  var $scope, userState, $location, updateDisplay, confirmResponse, functionCalled;
+  var $scope, userState, $location, updateDisplay, confirmResponse, functionCalled,
+  trackerCalled;
   beforeEach(function(){
     updateDisplay = true;
     confirmResponse = false;
     functionCalled = undefined;
+    trackerCalled = undefined;
     
     userState = function(){
       return {
@@ -96,9 +103,10 @@ describe('controller: display controls', function() {
       confirmResponse = true;
       updateDisplay = true;
       
-      $scope.confirm('1234', 'restart');
+      $scope.confirm('1234', 'Display 1', 'restart');
       setTimeout(function(){
         expect(functionCalled).to.equal('restart');
+        expect(trackerCalled).to.equal('Display Restarted');
         expect($scope.controlsInfo).to.be.ok;
         expect($scope.controlsError).to.not.be.ok;
         done();
@@ -109,9 +117,10 @@ describe('controller: display controls', function() {
       confirmResponse = true;
       updateDisplay = false;
       
-      $scope.confirm('1234', 'restart');
+      $scope.confirm('1234', 'Display 1', 'restart');
       setTimeout(function(){
         expect(functionCalled).to.equal('restart');
+        expect(trackerCalled).to.not.be.ok;
         expect($scope.controlsInfo).to.not.be.ok;
         expect($scope.controlsError).to.be.ok;
         done();
@@ -129,10 +138,11 @@ describe('controller: display controls', function() {
     it('should reboot the display', function (done) {
       confirmResponse = true;
       updateDisplay = true;
-
-      $scope.confirm('1234', 'reboot');
-      setTimeout(function () {
+      
+      $scope.confirm('1234', 'Display 1', 'reboot');
+      setTimeout(function(){
         expect(functionCalled).to.equal('reboot');
+        expect(trackerCalled).to.equal('Display Rebooted');
         expect($scope.controlsInfo).to.be.ok;
         expect($scope.controlsError).to.not.be.ok;
         done();
@@ -142,10 +152,11 @@ describe('controller: display controls', function() {
     it('should show an error if fails to reboot the display', function (done) {
       confirmResponse = true;
       updateDisplay = false;
-
-      $scope.confirm('1234', 'reboot');
-      setTimeout(function () {
+      
+      $scope.confirm('1234', 'Display 1', 'reboot');
+      setTimeout(function(){
         expect(functionCalled).to.equal('reboot');
+        expect(trackerCalled).to.not.be.ok;
         expect($scope.controlsInfo).to.not.be.ok;
         expect($scope.controlsError).to.be.ok;
         done();
