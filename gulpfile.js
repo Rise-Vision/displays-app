@@ -126,22 +126,23 @@ gulp.task('build', function (cb) {
 /*---- testing ----*/
 
 var unitTestFiles = [
-  "bower_components/angular/angular.js",
+  "bower_components/common-header/dist/js/dependencies.js",
   "bower_components/angular-mocks/angular-mocks.js",
   "bower_components/q/q.js",
-  "bower_components/common-header/dist/js/dependencies.js",
   "bower_components/common-header/dist/js/common-header.js",
-  "bower_components/moment/moment.js",
-  "bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js",
-  'bower_components/ng-core-api-client/src/js/svc-schedule.js',
-  "bower_components/ng-core-api-client/src/js/svc-display.js",
+  "bower_components/angular-ui-router/release/angular-ui-router.js",
+  "bower_components/angular-translate/angular-translate.js",
+  "bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js",
+  "bower_components/rv-common-i18n/dist/i18n.js",
+  "bower_components/rv-common-app-components/dist/js/focus-me.js",
+  "node_modules/widget-tester/mocks/segment-analytics-mock.js",
   "js/app.js",
   "js/**/*.js",
   "test/unit/**/*.tests.js"
 ];
 
 
-gulp.task("test:unit", factory.testUnitAngular({testFiles: unitTestFiles, configFile : 'test/unit/karma.conf.js'}));
+gulp.task("test:unit", factory.testUnitAngular({testFiles: unitTestFiles}));
 
 gulp.task("server", factory.testServer({https: false}));
 gulp.task("server-close", factory.testServerClose());
