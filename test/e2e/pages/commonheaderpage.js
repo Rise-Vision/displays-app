@@ -4,6 +4,10 @@ var helper = require('../common/helper.js');
 var DisplaysListPage = require('../pages/displaysListPage.js');
 
 var CommonHeaderPage = function() {
+
+  var USERNAME = browser.params.login.user;
+  var PASSWORD = browser.params.login.pass;
+
   var googleAuthPage = new GoogleAuthPage();
   var displaysListPage = new DisplaysListPage();
   var commonHeader = element(by.tagName('common-header'));
@@ -11,8 +15,7 @@ var CommonHeaderPage = function() {
   var signInButton = element(by.buttonText('Sign In'));
 
   this.signin = function () {
-      var username = browser.params.login.user;
-      var password = browser.params.login.pass;
+
 
       signInButton.isDisplayed().then(function (state) {
         if(state) {
@@ -21,38 +24,18 @@ var CommonHeaderPage = function() {
             googleAuthPage.getSigninCard().isDisplayed().then(function () {
               helper.wait(googleAuthPage.getSigninCard(), "Google Sigin Card").then(function () {
                 helper.wait(googleAuthPage.getEmailField(), "Google Sigin Email Field").then(function () {
-                  helper.wait(googleAuthPage.getPasswordField(), "Google Sigin Password Field").then(function () {
+                  helper.wait(googleAuthPage.getNextButton(), "Google Sigin Next Button").then(function () {
+                    googleAuthPage.getEmailField().sendKeys(USERNAME);
+                    googleAuthPage.getNextButton().click().then(function() {
+                      _enterPasswordAndSignIn();
+                    });
+                  }, function() {
                     helper.wait(googleAuthPage.getSignInButton(), "Google Sigin Sign In Button").then(function () {
-
-                      googleAuthPage.getEmailField().sendKeys(username);
-                      googleAuthPage.getPasswordField().sendKeys(password);
-                      googleAuthPage.getSignInButton().click().then(function() {
-                        googleAuthPage.getThirdPartyInfo().isDisplayed().then(function () {
-                          helper.wait(googleAuthPage.getThirdPartyInfo(), "Google Third Party Info").then(function () {
-                            helper.wait(googleAuthPage.getSubmitApproveAccessButton(), "Google Approce Access Button").then(function () {
-                              googleAuthPage.getSubmitApproveAccessButton().click().then(function () {
-                                browser.ignoreSynchronization = false;
-                                browser.wait(function () {
-                                  return element(by.css('.spinner-backdrop')).isDisplayed().then(function (result) {
-                                    return !result
-                                  });
-                                }, 20000);
-                                helper.wait(displaysListPage.getDisplaysAppContainer(), "Display App Container");
-                              });
-                            });
-                          });
-                        }, function() {
-                          browser.ignoreSynchronization = false;
-                          browser.wait(function () {
-                            return element(by.css('.spinner-backdrop')).isDisplayed().then(function (result) {
-                              return !result
-                            });
-                          }, 20000);
-                          helper.wait(displaysListPage.getDisplaysAppContainer(), "Display App Container");
-                        });
-                      });
+                      googleAuthPage.getEmailField().sendKeys(USERNAME);
+                      _enterPasswordAndSignIn();
                     });
                   });
+
                 });
               });
             }, function() {
@@ -73,6 +56,38 @@ var CommonHeaderPage = function() {
           });
         }
       });
+  }
+
+  var _enterPasswordAndSignIn = function() {
+
+    helper.wait(googleAuthPage.getPasswordField(), "Google Sigin Password Field").then(function () {
+      googleAuthPage.getPasswordField().sendKeys(PASSWORD);
+      googleAuthPage.getSignInButton().click().then(function() {
+        googleAuthPage.getThirdPartyInfo().isDisplayed().then(function () {
+          helper.wait(googleAuthPage.getThirdPartyInfo(), "Google Third Party Info").then(function () {
+            helper.wait(googleAuthPage.getSubmitApproveAccessButton(), "Google Approce Access Button").then(function () {
+              googleAuthPage.getSubmitApproveAccessButton().click().then(function () {
+                browser.ignoreSynchronization = false;
+                browser.wait(function () {
+                  return element(by.css('.spinner-backdrop')).isDisplayed().then(function (result) {
+                    return !result
+                  });
+                }, 20000);
+                helper.wait(displaysListPage.getDisplaysAppContainer(), "Display App Container");
+              });
+            });
+          });
+        }, function() {
+          browser.ignoreSynchronization = false;
+          browser.wait(function () {
+            return element(by.css('.spinner-backdrop')).isDisplayed().then(function (result) {
+              return !result
+            });
+          }, 20000);
+          helper.wait(displaysListPage.getDisplaysAppContainer(), "Display App Container");
+        });
+      });
+    });
   }
 
   this.getDisplaysAppContainer = function() {

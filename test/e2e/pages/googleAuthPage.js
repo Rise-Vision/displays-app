@@ -2,6 +2,7 @@
 var GoogleAuthPage = function() {
   var signinCard = element(by.css('.signin-card'));
   var emailField = element(by.id('Email'));
+  var nextButton = element(by.id('next'));
   var passwordField = element(by.id('Passwd'));
   var signInButton = element(by.id('signIn'));
   var thirdPartyInfo = element(by.id('third_party_info'));
@@ -15,6 +16,10 @@ var GoogleAuthPage = function() {
 
   this.getEmailField = function() {
     return emailField;
+  };
+
+  this.getNextButton = function() {
+    return nextButton;
   };
 
   this.getPasswordField = function() {
