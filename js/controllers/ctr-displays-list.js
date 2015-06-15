@@ -2,8 +2,9 @@
 
 angular.module('risevision.displaysApp.controllers')
   .controller('displaysList', ['$scope', 'userState', 'display', 'BaseList',
-    '$location', '$loading',
-    function ($scope, userState, display, BaseList, $location, $loading) {
+    '$location', '$loading', '$filter',
+    function ($scope, userState, display, BaseList, $location, $loading,
+      $filter) {
       var DB_MAX_COUNT = 40; //number of records to load at a time
 
       $scope.displays = new BaseList(DB_MAX_COUNT);
@@ -15,7 +16,8 @@ angular.module('risevision.displaysApp.controllers')
       }, $location.search());
 
       $scope.filterConfig = {
-        placeholder: '{{ "displays-app.list.filter.placeholder" | translate }}'
+        placeholder: $filter('translate')(
+          'displays-app.list.filter.placeholder')
       };
 
       $scope.$watch('loadingDisplays', function (loading) {

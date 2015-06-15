@@ -43,6 +43,12 @@ describe('controller: displays list', function() {
         }
       }
     });
+    
+    $provide.value('translateFilter', function(){
+      return function(key){
+        return key;
+      };
+    });
   }));
   var $scope, userState, $location, returnDisplays, companyId, apiCount, scrollEvent, result, $loading,$loadingStartSpy, $loadingStopSpy;
   beforeEach(function(){

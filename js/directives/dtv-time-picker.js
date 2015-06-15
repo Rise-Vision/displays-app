@@ -8,8 +8,8 @@ angular.module('risevision.displaysApp.directives')
         restrict: 'E',
         require: 'ngModel',
         scope: {
-          disabled: "=ngDisabled",
-          timeString: "=ngModel"
+          disabled: '=ngDisabled',
+          timeString: '=ngModel'
         },
         templateUrl: 'partials/time-picker.html',
         link: function ($scope, elm, attrs, ctrl) {
