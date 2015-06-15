@@ -4,7 +4,7 @@ angular.module('risevision.displaysApp.controllers')
   .controller('displaysList', ['$scope', 'userState', 'display', 'BaseList',
     '$location', '$loading',
     function ($scope, userState, display, BaseList, $location, $loading) {
-      var DB_MAX_COUNT = 20; //number of records to load at a time
+      var DB_MAX_COUNT = 40; //number of records to load at a time
 
       $scope.displays = new BaseList(DB_MAX_COUNT);
 

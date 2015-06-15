@@ -48,9 +48,14 @@ describe('controller: displays list', function() {
   beforeEach(function(){
     scrollEvent = {target: {scrollHeight: 0, clientHeight: 0, scrollTop: 0}};
     result = {
-      items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      items: [],
       cursor: 'asdf'
     };
+
+    for (var i = 1; i <= 40; i++) {
+      result.items.push(i);
+    }
+
     apiCount = 0;
     companyId = 'some_company_id';
     returnDisplays = true;
@@ -118,7 +123,7 @@ describe('controller: displays list', function() {
   it('should load the list',function(){
     expect($scope.loadingDisplays).to.be.false;
     expect($scope.displays).to.be.truely;
-    expect($scope.displays.list).to.have.length(20);
+    expect($scope.displays.list).to.have.length(40);
     expect($scope.displays.cursor).to.be.truely;
     expect($scope.displays.endOfList).to.be.false;
 
@@ -142,7 +147,7 @@ describe('controller: displays list', function() {
           expect($scope.error).to.not.be.ok;
           expect(apiCount).to.equal(2);
           
-          expect($scope.displays.list).to.have.length(21);
+          expect($scope.displays.list).to.have.length(41);
           expect($scope.displays.cursor).to.not.be.truely;
           expect($scope.displays.endOfList).to.be.true;
           $scope.$digest();
@@ -153,7 +158,7 @@ describe('controller: displays list', function() {
       
       it('should not re-load if there are no more items',function(done){
         result = {
-          items: [21],
+          items: [41],
         };
         $scope.load();
         $scope.$digest();
@@ -180,7 +185,7 @@ describe('controller: displays list', function() {
           expect($scope.error).to.not.be.ok;
           expect(apiCount).to.equal(2);
           
-          expect($scope.displays.list).to.have.length(20);
+          expect($scope.displays.list).to.have.length(40);
 
           expect($scope.search.sortBy).to.equal('name');
           expect($scope.search.reverse).to.be.true;
@@ -200,7 +205,7 @@ describe('controller: displays list', function() {
           expect($scope.error).to.not.be.ok;
           expect(apiCount).to.equal(2);
           
-          expect($scope.displays.list).to.have.length(20);
+          expect($scope.displays.list).to.have.length(40);
           
           expect($scope.search.sortBy).to.equal('status');
           expect($scope.search.reverse).to.be.false;
@@ -220,7 +225,7 @@ describe('controller: displays list', function() {
         expect($scope.error).to.not.be.ok;
         expect(apiCount).to.equal(2);
         
-        expect($scope.displays.list).to.have.length(20);
+        expect($scope.displays.list).to.have.length(40);
         
         expect($scope.search.sortBy).to.equal('name');
         expect($scope.search.reverse).to.be.false;
