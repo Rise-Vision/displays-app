@@ -19,8 +19,7 @@ angular.module('risevision.displaysApp.directives')
 
           $scope.canReboot = function (display) {
             // Cannot reboot Linux/Windows/Mac PackagedApp players
-            return $scope.isChromeOs(display) && display.playerName !==
-              'RisePlayerPackagedApp';
+            return ($scope.isChromeOs(display) || display.playerName !== 'RisePlayerPackagedApp');
           };
         } //link()
       };
