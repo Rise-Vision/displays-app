@@ -33,7 +33,7 @@ angular.module('risevision.displaysApp', [
     })
 
     .state('display.root', {
-      template: '',
+      templateUrl: 'partials/landing-page.html',
       url: '/',
       controller: ['canAccessDisplays', '$state',
 
