@@ -1,5 +1,6 @@
 'use strict';
 var GoogleAuthPage = function() {
+  var url = "https://accounts.google.com";
   var signinCard = element(by.css('.signin-card'));
   var emailField = element(by.id('Email'));
   var nextButton = element(by.id('next'));
@@ -10,6 +11,9 @@ var GoogleAuthPage = function() {
   var accountchooserTitle = element(by.id('accountchooser-title'));
   var chooseAccountFirstButton = element(by.id('choose-account-0'));
 
+  this.getUrl = function(){
+    return url;
+  }
   this.getSigninCard = function() {
     return signinCard;
   };
