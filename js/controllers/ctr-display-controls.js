@@ -3,8 +3,8 @@
 // controls Restart/Reboot functionality
 angular.module('risevision.displaysApp.controllers')
   .controller('displayControls', ['$scope', 'display',
-    '$log', '$modal', 'displayTracker',
-    function ($scope, display, $log, $modal, displayTracker) {
+    '$log', '$modal', '$templateCache', 'displayTracker',
+    function ($scope, display, $log, $modal, $templateCache, displayTracker) {
       $scope.displayTracker = displayTracker;
 
       var _restart = function (displayId, displayName) {
@@ -49,7 +49,8 @@ angular.module('risevision.displaysApp.controllers')
 
       $scope.confirm = function (displayId, displayName, mode) {
         $scope.modalInstance = $modal.open({
-          templateUrl: 'partials/confirm-modal.html',
+          template: $templateCache.get(
+            'confirm-instance/confirm-modal.html'),
           controller: 'confirmInstance',
           windowClass: 'modal-custom',
           resolve: {
