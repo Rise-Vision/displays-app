@@ -19,6 +19,43 @@ var wait = function (element, label) {
       }
     });
   }, 10000, label + " did not appear");
-  //browser.sleep(250);
 };
 exports.wait = wait;
+
+/**
+ * Usage: waitDisappear(element, label)
+ * element : It will wait for this element to disappear from view
+ * label : just used for the error message
+ */
+var waitDisappear = function (element, label) {
+  return browser.wait(function () {
+    return element.isEnabled().then(function (state) {
+      if (state == false) {
+        return element.isDisplayed().then(function (state2) {
+            return state3 == false;
+        });
+      } else {
+        return false;
+      }
+    });
+  }, 10000, label + " did not disappear");
+};
+
+exports.waitDisappear = waitDisappear;
+
+/**
+ * Usage: clickWhenClickable(element, label)
+ * element : It will click on the element when it is clickable
+ * label : just used for the error message
+ */
+var clickWhenClickable = function (element, label) {
+  return browser.wait(function () {
+    return element.click().then(function () {
+      return true;
+    }, function() {
+        return false;
+    });
+  }, 10000, label + " not clickable");
+};
+
+exports.clickWhenClickable = clickWhenClickable;

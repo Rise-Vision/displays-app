@@ -6,7 +6,7 @@ var DisplaysListPage = require('./pages/displaysListPage.js');
 var DisplayAddPage = require('./pages/displayAddPage.js');
 var helper = require('./common/helper.js');
 
-browser.driver.manage().window().setSize(1024, 768);
+browser.driver.manage().window().setSize(1280, 960);
 describe("In order to manage displays " +
   "As a user signed in " +
   "I would like to add displays", function() {
@@ -16,7 +16,7 @@ describe("In order to manage displays " +
   var displaysListPage;
   var displayAddPage;
 
-  beforeEach(function (){
+  before(function (){
     homepage = new HomePage();
     displaysListPage = new DisplaysListPage();
     displayAddPage = new DisplayAddPage();
@@ -72,4 +72,11 @@ describe("In order to manage displays " +
     helper.wait(displayAddPage.getDeleteButton(), 'Delete Button');
     expect(displayAddPage.getDeleteButton().isDisplayed()).to.eventually.be.true;
   });
+
+  after(function() {
+      helper.clickWhenClickable(displayAddPage.getDeleteButton(), "Display Delete Button").then(function () {
+        helper.clickWhenClickable(displayAddPage.getDeleteForeverButton(), "Display Delete Forever Button").then(function () {
+        });
+      });
+    });
 });
