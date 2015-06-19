@@ -61,6 +61,14 @@ describe("In order to manage displays " +
     it('should show the Sign In link',function(){
       expect(homepage.getSignInLink().isPresent()).to.eventually.be.true;
     });
+
+    it('should show the Sign Up text',function(){
+      expect(homepage.getSignUpText().getText()).to.eventually.equal('for free, no credit card required, or');
+    });
+
+    it('should show the Sign In text',function(){
+      expect(homepage.getSignInText().getText()).to.eventually.equal('if you already have an account.');
+    });
   });
 
   describe("Given a user who wants to sign up", function() {
