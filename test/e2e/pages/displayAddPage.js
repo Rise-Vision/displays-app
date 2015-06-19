@@ -16,6 +16,9 @@ var DisplayAddPage = function() {
   var cancelButton = element(by.id('cancelButton'));
 
   var deleteButton = element(by.id('deleteButton'));
+  var deleteForeverButton = element(by.buttonText('Delete Forever'));
+
+  var displayLoader = element(by.id('display-loader'));
 
   this.getDisplaysAppContainer = function() {
     return displaysAppContainer;
@@ -68,6 +71,14 @@ var DisplayAddPage = function() {
   this.getDeleteButton = function() {
     return deleteButton;
   };
+
+  this.getDeleteForeverButton = function() {
+    return deleteForeverButton;
+  }
+
+  this.getDisplayLoader = function() {
+    return displayLoader;
+  }
 };
 
 module.exports = DisplayAddPage;
