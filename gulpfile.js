@@ -135,6 +135,7 @@ var unitTestFiles = [
   "bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js",
   "bower_components/rv-common-i18n/dist/i18n.js",
   "bower_components/rv-common-app-components/dist/js/focus-me.js",
+  "bower_components/rv-common-app-components/dist/js/confirm-instance.js",
   "node_modules/widget-tester/mocks/segment-analytics-mock.js",
   "js/app.js",
   "js/**/*.js",

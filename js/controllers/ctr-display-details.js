@@ -3,9 +3,10 @@
 //updated url parameters to selected display status from status filter
 angular.module('risevision.displaysApp.controllers')
   .controller('displayDetails', ['$scope', '$q', '$state', '$stateParams',
-    'display', '$loading', '$modal', '$log', 'displayTracker',
+    'display', '$loading', '$modal', '$log', '$templateCache',
+    'displayTracker',
     function ($scope, $q, $state, $stateParams, display,
-      $loading, $modal, $log, displayTracker) {
+      $loading, $modal, $log, $templateCache, displayTracker) {
       $scope.displayId = $stateParams.displayId;
       $scope.savingDisplay = false;
 
@@ -62,7 +63,8 @@ angular.module('risevision.displaysApp.controllers')
 
       $scope.confirmDelete = function () {
         $scope.modalInstance = $modal.open({
-          templateUrl: 'partials/confirm-modal.html',
+          template: $templateCache.get(
+            'confirm-instance/confirm-modal.html'),
           controller: 'confirmInstance',
           windowClass: 'modal-custom',
           resolve: {
@@ -92,7 +94,8 @@ angular.module('risevision.displaysApp.controllers')
           $state.go('display.add');
         } else {
           $scope.modalInstance = $modal.open({
-            templateUrl: 'partials/confirm-modal.html',
+            template: $templateCache.get(
+              'confirm-instance/confirm-modal.html'),
             controller: 'confirmInstance',
             windowClass: 'modal-custom',
             resolve: {
