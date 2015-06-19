@@ -1,8 +1,8 @@
 'use strict';
-var expect = require('./common/expect.js');
+var expect = require('rv-common-e2e').expect;
 var HomePage = require('./pages/homepage.js');
-var CommonHeaderPage = require('./pages/commonheaderpage.js');
-var GoogleAuthPage = require('./pages/googleAuthPage.js');
+var CommonHeaderPage = require('rv-common-e2e').commonHeaderPage;
+var GoogleAuthPage = require('rv-common-e2e').googleAuthPage;
 
 browser.driver.manage().window().setSize(1024, 768);
 describe("In order to manage displays " +
@@ -12,7 +12,7 @@ describe("In order to manage displays " +
   var homepage;
   var commonHeaderPage;
   var googleAuthPage;
-  beforeEach(function (){
+  before(function (){
     homepage = new HomePage();
     commonHeaderPage = new CommonHeaderPage();
     googleAuthPage = new GoogleAuthPage();
@@ -24,6 +24,15 @@ describe("In order to manage displays " +
   });
 
   describe("Given a user who access the displays app", function() {
+
+    before(function (){
+      homepage.get();
+      //wait for spinner to go away.
+      browser.wait(function() {
+        return element(by.css('.spinner-backdrop')).isDisplayed().then(function(result){return !result});
+      }, 20000);
+    });
+
     it('should load',function(){
       expect(homepage.getDisplaysAppContainer().isPresent()).to.eventually.be.true;
     });
@@ -33,12 +42,12 @@ describe("In order to manage displays " +
     });
 
     it('should have a display menu item on the common header',function(){
-      expect(commonHeaderPage.getDisplayMenuItem().isPresent()).to.eventually.be.true;
-      expect(commonHeaderPage.getDisplayMenuItem().getText()).to.eventually.equal('Displays');
+      expect(commonHeaderPage.getCommonHeaderMenuItems().get(0).isPresent()).to.eventually.be.true;
+      expect(commonHeaderPage.getCommonHeaderMenuItems().get(0).getText()).to.eventually.equal('Displays');
     });
 
     it('should go to home when clicking on Displays menu item',function(){
-      commonHeaderPage.getDisplayMenuItem().click();
+      commonHeaderPage.getCommonHeaderMenuItems().get(0).click();
       expect(browser.getCurrentUrl()).to.eventually.equal(homepage.getUrl());
     });
 
@@ -72,6 +81,13 @@ describe("In order to manage displays " +
   });
 
   describe("Given a user who wants to sign up", function() {
+    before(function (){
+      homepage.get();
+      //wait for spinner to go away.
+      browser.wait(function() {
+        return element(by.css('.spinner-backdrop')).isDisplayed().then(function(result){return !result});
+      }, 20000);
+    });
     it('should open sign up model when clicking on the sign up link',function(){
       homepage.getSignUpLink().click();
       expect(commonHeaderPage.getModalDialog().isPresent()).to.eventually.be.true;
@@ -79,6 +95,13 @@ describe("In order to manage displays " +
   });
 
   describe("Given a user who wants to sign in", function() {
+    before(function (){
+      homepage.get();
+      //wait for spinner to go away.
+      browser.wait(function() {
+        return element(by.css('.spinner-backdrop')).isDisplayed().then(function(result){return !result});
+      }, 20000);
+    });
     it('should go to google authentication when clicking on the sign in link',function(){
       homepage.getSignInLink().click();
       browser.ignoreSynchronization = true;

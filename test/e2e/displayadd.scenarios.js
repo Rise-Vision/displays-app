@@ -1,10 +1,10 @@
 'use strict';
-var expect = require('./common/expect.js');
+var expect = require('rv-common-e2e').expect;
 var HomePage = require('./pages/homepage.js');
-var CommonHeaderPage = require('./pages/commonheaderpage.js');
+var CommonHeaderPage = require('rv-common-e2e').commonHeaderPage;
 var DisplaysListPage = require('./pages/displaysListPage.js');
 var DisplayAddPage = require('./pages/displayAddPage.js');
-var helper = require('./common/helper.js');
+var helper = require('rv-common-e2e').helper;
 
 browser.driver.manage().window().setSize(1280, 960);
 describe("In order to manage displays " +

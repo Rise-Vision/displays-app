@@ -74,11 +74,11 @@ var DisplayAddPage = function() {
 
   this.getDeleteForeverButton = function() {
     return deleteForeverButton;
-  }
+  };
 
   this.getDisplayLoader = function() {
     return displayLoader;
-  }
+  };
 };
 
 module.exports = DisplayAddPage;
