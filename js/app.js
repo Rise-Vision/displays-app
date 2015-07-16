@@ -9,6 +9,7 @@ angular.module('risevision.displaysApp', [
   'risevision.common.components.scrolling-list',
   'risevision.common.components.focus-me',
   'risevision.common.components.confirm-instance',
+  'risevision.common.components.analytics',
   'ngTouch',
   'ui.bootstrap',
   'ui.bootstrap.showErrors',
@@ -17,7 +18,6 @@ angular.module('risevision.displaysApp', [
   'risevision.displaysApp.controllers',
   'risevision.displaysApp.filters',
   'risevision.displaysApp.directives',
-  'risevision.common.analytics',
   'risevision.common.loading',
   'risevision.common.i18n'
 ])
