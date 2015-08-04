@@ -107,18 +107,6 @@
   
 </div>
 
-<div class="form-group">
-  <div class="checkbox">
-    <label class="control-label"><input type="checkbox" ng-model="display.monitoringEnabled"> <strong translate>displays-app.fields.monitor.name</strong></label> 
-  </div>
-</div>
-
-<div class="panel panel-info animated fadeIn" ng-controller="monitoring" ng-show="display.monitoringEnabled && !monitoringEmails">
-  <div class="panel-body">
-    <p>{{ 'displays-app.fields.monitor.warning' | translate}}</p>
-  </div>
-</div>
-
 <hr ng-if="displayId"/>
 
 <div class="form-group form-inline" ng-show="displayId">

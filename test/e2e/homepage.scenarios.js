@@ -3,8 +3,9 @@ var expect = require('rv-common-e2e').expect;
 var HomePage = require('./pages/homepage.js');
 var CommonHeaderPage = require('rv-common-e2e').commonHeaderPage;
 var GoogleAuthPage = require('rv-common-e2e').googleAuthPage;
+var helper = require('rv-common-e2e').helper;
 
-browser.driver.manage().window().setSize(1024, 768);
+browser.driver.manage().window().setSize(1920, 1080);
 describe("In order to manage displays " +
          "As a user " +
          "I would like to have access to the homepage of the displays app", function() {
@@ -16,11 +17,6 @@ describe("In order to manage displays " +
     homepage = new HomePage();
     commonHeaderPage = new CommonHeaderPage();
     googleAuthPage = new GoogleAuthPage();
-    homepage.get();
-    //wait for spinner to go away.
-    browser.wait(function() {
-      return element(by.css('.spinner-backdrop')).isDisplayed().then(function(result){return !result});
-    }, 20000);
   });
 
   describe("Given a user who access the displays app", function() {
@@ -28,11 +24,9 @@ describe("In order to manage displays " +
     before(function (){
       homepage.get();
       //wait for spinner to go away.
-      browser.wait(function() {
-        return element(by.css('.spinner-backdrop')).isDisplayed().then(function(result){return !result});
-      }, 20000);
+      helper.waitDisappear(commonHeaderPage.getLoader(), 'CH spinner loader');
     });
-
+    
     it('should load',function(){
       expect(homepage.getDisplaysAppContainer().isPresent()).to.eventually.be.true;
     });
@@ -84,10 +78,9 @@ describe("In order to manage displays " +
     before(function (){
       homepage.get();
       //wait for spinner to go away.
-      browser.wait(function() {
-        return element(by.css('.spinner-backdrop')).isDisplayed().then(function(result){return !result});
-      }, 20000);
+      helper.waitDisappear(commonHeaderPage.getLoader(), 'CH spinner loader');
     });
+    
     it('should open sign up model when clicking on the sign up link',function(){
       homepage.getSignUpLink().click();
       expect(commonHeaderPage.getModalDialog().isPresent()).to.eventually.be.true;
@@ -98,15 +91,16 @@ describe("In order to manage displays " +
     before(function (){
       homepage.get();
       //wait for spinner to go away.
-      browser.wait(function() {
-        return element(by.css('.spinner-backdrop')).isDisplayed().then(function(result){return !result});
-      }, 20000);
+      helper.waitDisappear(commonHeaderPage.getLoader(), 'CH spinner loader');
     });
-    it('should go to google authentication when clicking on the sign in link',function(){
-      homepage.getSignInLink().click();
-      browser.ignoreSynchronization = true;
-      expect(browser.getCurrentUrl()).to.eventually.contain(googleAuthPage.getUrl());
-      browser.ignoreSynchronization = false;
+    
+    it('should go to google authentication when clicking on the sign in link',function(done){
+      homepage.getSignInLink().click().then(function () {
+        googleAuthPage.signin();
+        expect(browser.getCurrentUrl()).to.eventually.contain(homepage.getUrl());
+        
+        done();
+      });
     });
   });
 

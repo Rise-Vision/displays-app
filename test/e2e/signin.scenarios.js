@@ -22,9 +22,9 @@ describe("In order to manage displays " +
 
     homepage.get();
     //wait for spinner to go away.
-    browser.wait(function() {
-      return element(by.css('.spinner-backdrop')).isDisplayed().then(function(result){return !result});
-    }, 20000);
+    helper.waitDisappear(commonHeaderPage.getLoader(), 'CH spinner loader').then(function () {
+      commonHeaderPage.signin();
+    });
   });
 
   it('should sign in to the Displays app',function(){

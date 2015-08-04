@@ -3,6 +3,7 @@ var expect = require('rv-common-e2e').expect;
 var HomePage = require('./pages/homepage.js');
 var CommonHeaderPage = require('rv-common-e2e').commonHeaderPage;
 var DisplaysListPage = require('./pages/displaysListPage.js');
+var helper = require('rv-common-e2e').helper;
 
 browser.driver.manage().window().setSize(1024, 768);
 describe("In order to manage displays " +
@@ -23,10 +24,9 @@ describe("In order to manage displays " +
     before(function () {
       homepage.get();
       //wait for spinner to go away.
-      browser.wait(function() {
-        return element(by.css('.spinner-backdrop')).isDisplayed().then(function(result){return !result});
-      }, 20000);
-      commonHeaderPage.signin();
+      helper.waitDisappear(commonHeaderPage.getLoader(), 'CH spinner loader').then(function () {
+        commonHeaderPage.signin();
+      });
     });
 
     it('should show displays list page',function(){

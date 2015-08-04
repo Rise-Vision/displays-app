@@ -6,8 +6,8 @@ angular.module('risevision.displaysApp.services')
   .constant('DISPLAY_WRITABLE_FIELDS', [
     'name', 'status', 'useCompanyAddress', 'addressDescription', 'street',
     'unit', 'city', 'province', 'country', 'postalCode', 'timeZoneOffset',
-    'restartEnabled', 'restartTime', 'monitoringEnabled',
-    'browserUpgradeMode', 'width', 'height', 'orientation'
+    'restartEnabled', 'restartTime', 'browserUpgradeMode', 'width', 'height',
+    'orientation'
   ])
   .constant('DISPLAY_SEARCH_FIELDS', [
     'name', 'id', 'street', 'unit', 'city', 'province', 'country',
