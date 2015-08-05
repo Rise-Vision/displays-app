@@ -10,7 +10,6 @@ var DisplayAddPage = function() {
   var displayHoursField = element(by.model('hours'));
   var displayMinutesField = element(by.model('minutes'));
   var displayMeridianButton = element(by.id('meridianButton'));
-  var displayMonitoringCheckbox = element(by.model('display.monitoringEnabled'));
 
   var saveButton = element(by.id('saveButton'));
   var cancelButton = element(by.id('cancelButton'));
@@ -54,10 +53,6 @@ var DisplayAddPage = function() {
 
   this.getDisplayMeridianButton = function() {
     return displayMeridianButton;
-  };
-
-  this.getDisplayMonitoringCheckbox = function() {
-    return displayMonitoringCheckbox;
   };
 
   this.getSaveButton = function() {

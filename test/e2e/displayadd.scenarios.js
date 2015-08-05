@@ -24,10 +24,9 @@ describe("In order to manage displays " +
 
     homepage.get();
     //wait for spinner to go away.
-    browser.wait(function() {
-      return element(by.css('.spinner-backdrop')).isDisplayed().then(function(result){return !result});
-    }, 20000);
-    commonHeaderPage.signin();
+    helper.waitDisappear(commonHeaderPage.getLoader(), 'CH spinner loader').then(function () {
+      commonHeaderPage.signin();
+    });
     displaysListPage.getDisplayAddButton().click();
   });
 
@@ -51,10 +50,6 @@ describe("In order to manage displays " +
     expect(displayAddPage.getDisplayHoursField().isPresent()).to.eventually.be.true;
     expect(displayAddPage.getDisplayMinutesField().isPresent()).to.eventually.be.true;
     expect(displayAddPage.getDisplayMeridianButton().isPresent()).to.eventually.be.true;
-  });
-
-  it('should show Monitoring Checkbox',function(){
-    expect(displayAddPage.getDisplayMonitoringCheckbox().isPresent()).to.eventually.be.true;
   });
 
   it('should show Save Button',function(){
