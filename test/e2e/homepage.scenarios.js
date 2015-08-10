@@ -50,11 +50,7 @@ describe("In order to manage displays " +
     });
 
     it('should show the manage displays text',function(){
-      expect(homepage.getManageDisplaysText().getText()).to.eventually.equal('Manage an unlimited number of digital signage displays anywhere in the world.');
-    });
-
-    it('should show the displays explanation text',function(){
-      expect(homepage.getDisplaysExplanationText().getText()).to.eventually.equal('Displays is where you can add, remove, configure, connect, disconnect and restart any display in your network.');
+      expect(homepage.getManageDisplaysText().getText()).to.eventually.equal('Manage and monitor your digital signage displays, anywhere, anytime.');
     });
 
     it('should show the Sign Up link',function(){
