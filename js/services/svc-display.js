@@ -46,8 +46,8 @@ angular.module('risevision.displaysApp.services')
           };
           $log.debug('list displays called with', obj);
           coreAPILoader().then(function (coreApi) {
-            return coreApi.display.list(obj);
-          })
+              return coreApi.display.list(obj);
+            })
             .then(function (resp) {
               deferred.resolve(resp.result);
             })
@@ -67,8 +67,8 @@ angular.module('risevision.displaysApp.services')
 
           $log.debug('get display called with', displayId);
           coreAPILoader().then(function (coreApi) {
-            return coreApi.display.get(obj);
-          })
+              return coreApi.display.get(obj);
+            })
             .then(function (resp) {
               $log.debug('get display resp', resp);
               deferred.resolve(resp.result);
@@ -90,8 +90,8 @@ angular.module('risevision.displaysApp.services')
             'data': fields
           };
           coreAPILoader().then(function (coreApi) {
-            return coreApi.display.add(obj);
-          })
+              return coreApi.display.add(obj);
+            })
             .then(function (resp) {
               $log.debug('added display', resp);
               deferred.resolve(resp.result);
@@ -114,8 +114,8 @@ angular.module('risevision.displaysApp.services')
 
           $log.debug('update display called with', displayId);
           coreAPILoader().then(function (coreApi) {
-            return coreApi.display.patch(obj);
-          })
+              return coreApi.display.patch(obj);
+            })
             .then(function (resp) {
               $log.debug('update display resp', resp);
               deferred.resolve(resp.result);
@@ -136,8 +136,8 @@ angular.module('risevision.displaysApp.services')
 
           $log.debug('delete display called with', displayId);
           coreAPILoader().then(function (coreApi) {
-            return coreApi.display.delete(obj);
-          })
+              return coreApi.display.delete(obj);
+            })
             .then(function (resp) {
               $log.debug('delete display resp', resp);
               deferred.resolve(resp);
@@ -158,8 +158,8 @@ angular.module('risevision.displaysApp.services')
 
           $log.debug('restart display called with', displayId);
           coreAPILoader().then(function (coreApi) {
-            return coreApi.display.restart(obj);
-          })
+              return coreApi.display.restart(obj);
+            })
             .then(function (resp) {
               $log.debug('restart display resp', resp);
               deferred.resolve(resp);
@@ -180,8 +180,8 @@ angular.module('risevision.displaysApp.services')
 
           $log.debug('reboot display called with', displayId);
           coreAPILoader().then(function (coreApi) {
-            return coreApi.display.reboot(obj);
-          })
+              return coreApi.display.reboot(obj);
+            })
             .then(function (resp) {
               $log.debug('reboot display resp', resp);
               deferred.resolve(resp);

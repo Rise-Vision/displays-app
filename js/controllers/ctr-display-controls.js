@@ -55,10 +55,12 @@ angular.module('risevision.displaysApp.controllers')
           windowClass: 'modal-custom',
           resolve: {
             confirmationTitle: function () {
-              return 'displays-app.fields.controls.' + mode + '.title';
+              return 'displays-app.fields.controls.' + mode +
+                '.title';
             },
             confirmationMessage: function () {
-              return 'displays-app.fields.controls.' + mode + '.warning';
+              return 'displays-app.fields.controls.' + mode +
+                '.warning';
             },
             confirmationButton: null,
             cancelButton: null
