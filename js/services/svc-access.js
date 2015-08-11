@@ -6,12 +6,12 @@ angular.module('risevision.displaysApp.services')
       return function () {
         var deferred = $q.defer();
         userState.authenticate(false).then(function () {
-          if (userState.isRiseVisionUser()) {
-            deferred.resolve();
-          } else {
-            deferred.reject();
-          }
-        })
+            if (userState.isRiseVisionUser()) {
+              deferred.resolve();
+            } else {
+              deferred.reject();
+            }
+          })
           .then(null, deferred.reject);
         return deferred.promise;
       };

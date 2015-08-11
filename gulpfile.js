@@ -1,22 +1,17 @@
 var gulp = require('gulp');
-var connect = require('gulp-connect');
-var colors = require('colors');
-var watch = require('gulp-watch');
 var gutil = require("gulp-util");
+var browserSync = require('browser-sync');
 var rename = require('gulp-rename');
-var mainBowerFiles = require('main-bower-files');
-var clean = require('gulp-clean');
 var prettify = require('gulp-jsbeautifier');
 var jshint = require('gulp-jshint');
 var runSequence = require('run-sequence');
 var factory = require("widget-tester").gulpTaskFactory;
-var path = require("path");
 var rimraf = require("gulp-rimraf");
 var uglify = require("gulp-uglify");
 var usemin = require("gulp-usemin");
 var minifyCSS = require("gulp-minify-css");
+var minifyHtml  = require('gulp-minify-html');
 var concat = require("gulp-concat");
-var e2ePort = process.env.E2E_PORT || 8099;
 
 /*---- tooling ---*/
 gulp.task('pretty', function() {
@@ -84,6 +79,7 @@ gulp.task("lint", function() {
 gulp.task("html", ["lint"], function () {
   return gulp.src(['./index.html'])
      .pipe(usemin({
+      html: [minifyHtml({empty: true})],
       js: [uglify({
          mangle:true,
          outSourceMap: false // source map generation doesn't seem to function correctly
@@ -123,6 +119,22 @@ gulp.task('build', function (cb) {
 });
 
 
+//------------------------- Browser Sync --------------------------------
+
+gulp.task('browser-sync', function() {
+  browserSync({
+    server: {
+      baseDir: './'
+    },
+    port: 8000,
+    open: false
+  });
+});
+
+gulp.task('browser-sync-reload', function() {
+  browserSync.reload();
+});
+
 /*---- testing ----*/
 
 var unitTestFiles = [
@@ -151,7 +163,8 @@ gulp.task("test:webdrive_update", factory.webdriveUpdate());
 gulp.task("test:e2e:core", ["test:webdrive_update"], factory.testE2EAngular({
   browser: "chrome",
   loginUser: process.env.E2E_USER,
-  loginPass: process.env.E2E_PASS
+  loginPass: process.env.E2E_PASS,
+  testFiles: process.env.TEST_FILES
 }));
 gulp.task("test:e2e", function (cb) {
   runSequence("config-e2e","server", "test:e2e:core", "server-close", cb);
@@ -167,28 +180,15 @@ gulp.task("test:ci",  function (cb) {
   runSequence("test:unit", "metrics", cb);
 });
 
-/*---- dev task ---*/
-gulp.task('reload',function(){
-  return connect.reload();
-})
-gulp.task('dev', function() {
-  // Start a server
-  connect.server({
-    root: '',
-    port: 8000,
-    livereload: true
-  });
-  console.log('[CONNECT] Listening on port 3000'.yellow.inverse);
-  // Watch HTML files for changes
-  console.log('[CONNECT] Watching HTML files for live-reload'.blue);
-  gulp.watch( ['./partials/**/*.html', './js/**/*.js', './index.html', './displays-app-styles.css']
-  //,['pretty','hint','reload']) //restore once the site is not hosted on github pages
-  ,['reload'])
 
-  //re-run unit tests, TDD!!!!
-  //todo: have phantomJS keep running, and just re-run the tests
+//------------------------- Watch --------------------------------
+gulp.task('watch', function () {
+  gulp.watch(['./partials/**/*.html', './js/**/*.js', './index.html'], ['browser-sync-reload']);
   gulp.watch( unitTestFiles,['test:unit']);
 });
+
+/*---- dev task ---*/
+gulp.task('dev', ['config','browser-sync', 'watch']);
 
 gulp.task('default', [], function() {
   console.log('***********************'.yellow);
