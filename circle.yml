@@ -21,12 +21,19 @@ deployment:
       - echo $CI_PULL_REQUEST
       # We have 3 stage environments, displays-stage-0.risevision.com, displays-stage-1.risevision.com and displays-stage-2.risevision.com.
       # To deploy to one of these environments a tag must be added to the commit message. For instance, [stage-0] for displays-stage-0.risevision.com.
-      # The build will fail if the tag is not added.
-      - if [ "$(git log -1 --pretty=%B | grep '\[.*\]' |sed -e 's/.*\[\(.*\)\].*/\1/g')" == '' ]; then echo "stage deployment environment missing. Add a tag such as [stage-0] to the commit message."; exit 1; fi
+      # If tag is missing, the [stage-0] is used.
       - NODE_ENV=test npm run build
-      - echo "deploying to $(git log -1 --pretty=%B | grep '\[.*\]' |sed -e 's/.*\[\(.*\)\].*/\1/g')";
       - ssh displays@webserver-stage.risevision.com 'mkdir -p /rise-front-end/displays';
-      - rsync -rptz -e ssh --delete dist displays@webserver-stage.risevision.com:/rise-front-end/displays/$(git log -1 --pretty=%B | grep '\[.*\]' |sed -e 's/.*\[\(.*\)\].*/\1/g')
+      - >
+        STAGE_ENV="$(git log -1 --pretty=%B | grep '\[.*\]' |sed -e 's/.*\[\(.*\)\].*/\1/g')";
+        if [ "$STAGE_ENV" != '' ]; then
+          echo "Deploying to $STAGE_ENV";
+        fi;
+        if [ "$STAGE_ENV" == '' ]; then
+          echo "stage deployment environment missing. Deploying to [stage-0].";
+          STAGE_ENV='stage-0';
+        fi;
+        rsync -rptz -e ssh --delete dist displays@webserver-stage.risevision.com:/rise-front-end/displays/$STAGE_ENV;
       - tar czvf dist.tar.gz dist
   production:
     branch: master
