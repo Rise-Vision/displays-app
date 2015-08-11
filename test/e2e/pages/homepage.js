@@ -11,7 +11,6 @@ var HomePage = function() {
   var signUpLink = element(by.id('sign-up-link'));
   var signInLink = element(by.id('sign-in-link'));
 
-
   this.get = function() {
     browser.get(url);
   };
@@ -50,6 +49,18 @@ var HomePage = function() {
 
   this.getSignInLink = function() {
     return signInLink;
+  };
+
+  this.getMetaByName = function(name) {
+    return element(by.xpath("//meta[@name='"+name+"']"));
+  };
+
+  this.getMetaByItemProp = function(itemprop) {
+    return element(by.xpath("//meta[@itemprop='"+itemprop+"']"));
+  };
+
+  this.getMetaByProperty = function(property) {
+    return element(by.xpath("//meta[@property='"+property+"']"));
   };
 
 };
