@@ -3,6 +3,7 @@ describe('controller: display add', function() {
   var displayId = 1234;
   beforeEach(module('risevision.displaysApp.controllers'));
   beforeEach(module('risevision.displaysApp.services'));
+  beforeEach(module(mockTranlate()));
   beforeEach(module(function ($provide) {
     $provide.service('userState',userState);
     $provide.service('display',function(){
