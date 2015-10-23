@@ -1,4 +1,4 @@
-Displays App [![Circle CI](https://circleci.com/gh/Rise-Vision/displays-app.svg?style=svg)](https://circleci.com/gh/Rise-Vision/displays-app)
+Displays App [![Circle CI](https://circleci.com/gh/Rise-Vision/displays-app.svg?style=svg)](https://circleci.com/gh/Rise-Vision/displays-app) [![Coverage Status](https://coveralls.io/repos/Rise-Vision/displays-app/badge.svg?branch=master&service=github)](https://coveralls.io/github/Rise-Vision/displays-app?branch=master)
 ==============
 
 ## Introduction
