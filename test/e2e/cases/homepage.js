@@ -44,7 +44,7 @@ var HomePageScenarios = function() {
 
       it('should go to home when clicking on Displays menu item', function () {
         commonHeaderPage.getCommonHeaderMenuItems().get(0).click();
-        expect(browser.getCurrentUrl()).to.eventually.equal(homepage.getUrl());
+        expect(browser.getCurrentUrl()).to.eventually.contain(homepage.getUrl());
       });
 
       it('should show the displays image', function () {

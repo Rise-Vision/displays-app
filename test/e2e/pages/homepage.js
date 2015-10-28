@@ -1,7 +1,7 @@
 'use strict';
 var config = require('../config/config.json');
 var HomePage = function() {
-  var url = config.rootUrl + '/#/';
+  var url = config.rootUrl + '/#';
   var displaysAppContainer = element(by.css('.displays-app'));
   var displaysImage = element(by.id('displays-image'));
   var manageDisplaysText = element(by.id('manage-displays-text'));
