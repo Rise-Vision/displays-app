@@ -120,11 +120,11 @@
       <i class="fa fa-download"></i> 
       {{ 'displays-app.fields.controls.download' | translate }}
     </a>
-    <button type="button" class="btn btn-default" ng-disabled="!display.playerVersion" ng-click="confirm(displayId, display.name, 'restart')">
+    <button type="button" class="btn btn-default" ng-disabled="!display.playerVersion" ng-click="confirm(displayId, display.name, 'restart')" require-role="da">
       <i class="fa fa-refresh"></i> 
       {{ 'displays-app.fields.controls.restart.name' | translate }}
     </button>
-    <button type="button" class="btn btn-default" ng-disabled="!display.playerVersion || !canReboot(display)" ng-click="confirm(displayId, display.name, 'reboot')">
+    <button type="button" class="btn btn-default" ng-disabled="!display.playerVersion || !canReboot(display)" ng-click="confirm(displayId, display.name, 'reboot')" require-role="da">
       <i class="fa fa-power-off"></i> 
       {{ 'displays-app.fields.controls.reboot.name' | translate }}
     </button>
