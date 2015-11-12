@@ -4,9 +4,8 @@
     <h1 translate>displays-app.title</h1>
   </div>
 
-  <div class="global-actions">
-    <button ng-click="addDisplay()"
-      class="btn btn-lg btn-primary">     
+  <div class="global-actions" require-role="da">
+    <button ng-click="addDisplay()" class="btn btn-lg btn-primary">     
       {{ 'displays-app.actions.new' | translate }}
       <i class="fa fa-plus icon-right"></i> 
     </button>
@@ -27,13 +26,14 @@
     <div class="button-row">
       <p class="visible-xs text-right"><last-modified change-date="display.changeDate" changed-by="display.changedBy"></last-modified></p>
       <!-- Indicates delete or destructive action -->
-      <button id="deleteButton" type="button" class="btn btn-danger btn-fixed-width" ng-click="confirmDelete()" ng-if="displayId">
-        {{'common.delete' | translate}} <i class="fa fa-white fa-trash-o icon-right"></i>
+      <button id="deleteButton" type="button" class="btn btn-danger btn-fixed-width" ng-click="confirmDelete()" require-role="da">
+        {{'common.delete' | translate}}
+        <i class="fa fa-white fa-trash-o icon-right"></i>
       </button>
       <div class="pull-right">
       <span class="hidden-xs add-right"><last-modified change-date="display.changeDate" changed-by="display.changedBy"></last-modified></span>
         <!-- Indicates a successful or positive action -->
-        <button type="submit" class="btn btn-primary btn-fixed-width" ng-click="save()" ng-disabled="displayDetails.$invalid || savingDisplay">
+        <button type="submit" class="btn btn-primary btn-fixed-width" ng-click="save()" ng-disabled="displayDetails.$invalid || savingDisplay" require-role="da">
           {{ savingDisplay ? ('common.saving' | translate) : ('common.save' | translate)}} 
           <i class="fa fa-check icon-right"></i>
         </button>

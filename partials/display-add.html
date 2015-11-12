@@ -19,7 +19,7 @@
     <div class="pull-right">      
       <div class="button-row">
         <!-- Indicates a successful or positive action -->
-        <button id="saveButton" type="submit" class="btn btn-primary btn-fixed-width" ng-click="save()" ng-disabled="displayDetails.$invalid || savingDisplay">
+        <button id="saveButton" type="submit" class="btn btn-primary btn-fixed-width" ng-click="save()" ng-disabled="displayDetails.$invalid || savingDisplay" require-role="da">
           {{ savingDisplay ? ('common.saving' | translate) : ('common.save' | translate)}} 
           <i class="fa fa-check icon-right"></i>
         </button>
