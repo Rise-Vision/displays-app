@@ -11,6 +11,7 @@ var uglify = require("gulp-uglify");
 var usemin = require("gulp-usemin");
 var minifyCSS = require("gulp-minify-css");
 var minifyHtml  = require('gulp-minify-html');
+var ngHtml2Js = require("gulp-ng-html2js");
 var concat = require("gulp-concat");
 
 /*---- tooling ---*/
@@ -93,13 +94,20 @@ gulp.task("html", ["lint"], function () {
     })
 });
 
-gulp.task("partials", function () {
-  return gulp.src(['./partials/*.html'])
-    .pipe(gulp.dest("dist/partials"))
-    .on('error',function(e){
-    console.error(String(e));
-
-    })
+gulp.task("html2js", function() {
+  return gulp.src("./partials/*.html")
+    .pipe(minifyHtml({
+      empty: true,
+      spare: true,
+      quotes: true,
+      loose: true
+    }))
+    .pipe(ngHtml2Js({
+      moduleName: "risevision.displaysApp.partials",
+      prefix: "partials/"
+    }))
+    .pipe(concat("partials.js"))
+    .pipe(gulp.dest("./tmp/"));
 });
 
 gulp.task("css", function () {
@@ -115,7 +123,7 @@ gulp.task("fonts", function() {
 });
 
 gulp.task('build', function (cb) {
-  runSequence(["clean", "config"], ['pretty'],["html","css", "fonts", "locales", "partials"], cb);
+  runSequence(["clean", "config"], ['pretty', 'html2js'],["html","css", "fonts", "locales"], cb);
 });
 
 
@@ -180,7 +188,7 @@ gulp.task("test:e2e", function (cb) {
 
 gulp.task("metrics", factory.metrics());
 gulp.task("test",  function (cb) {
-  runSequence("config", ["test:unit", "test:e2e"], "coveralls", cb);
+  runSequence(["config", "html2js"], ["test:unit", "test:e2e"], "coveralls", cb);
 });
 
 gulp.task("test:ci",  function (cb) {
@@ -190,7 +198,8 @@ gulp.task("test:ci",  function (cb) {
 
 //------------------------- Watch --------------------------------
 gulp.task('watch', function () {
-  gulp.watch(['./partials/**/*.html', './js/**/*.js', './index.html'], ['browser-sync-reload']);
+  gulp.watch(['./partials/**/*.html'], ['html2js']);
+  gulp.watch(['./tmp/partials.js', './js/**/*.js', './index.html'], ['browser-sync-reload']);
   gulp.watch( unitTestFiles,['test:unit']);
 });
 

@@ -13,6 +13,7 @@ angular.module('risevision.displaysApp', [
     'ngTouch',
     'ui.bootstrap',
     'ui.bootstrap.showErrors',
+    'risevision.displaysApp.partials',
     'risevision.displaysApp.config',
     'risevision.displaysApp.services',
     'risevision.displaysApp.controllers',
@@ -27,14 +28,14 @@ angular.module('risevision.displaysApp', [
       $urlRouterProvider.otherwise('/display/list');
 
       // Use $stateProvider to configure states.
-      $stateProvider
-
-        .state('display', {
+      $stateProvider.state('display', {
         template: '<div ui-view></div>'
       })
 
       .state('display.root', {
-        templateUrl: 'partials/landing-page.html',
+        templateProvider: ['$templateCache', function ($templateCache) {
+          return $templateCache.get('partials/landing-page.html');
+        }],
         url: '/',
         controller: ['canAccessDisplays', '$state',
 
@@ -48,7 +49,9 @@ angular.module('risevision.displaysApp', [
 
       .state('display.list', {
         url: '/display/list',
-        templateUrl: 'partials/displays-list.html',
+        templateProvider: ['$templateCache', function ($templateCache) {
+          return $templateCache.get('partials/displays-list.html');
+        }],
         controller: 'displaysList',
         resolve: {
           canAccessDisplays: ['canAccessDisplays',
@@ -61,7 +64,9 @@ angular.module('risevision.displaysApp', [
 
       .state('display.details', {
         url: '/display/details/:displayId',
-        templateUrl: 'partials/display-details.html',
+        templateProvider: ['$templateCache', function ($templateCache) {
+          return $templateCache.get('partials/display-details.html');
+        }],
         controller: 'displayDetails',
         resolve: {
           canAccessDisplays: ['canAccessDisplays',
@@ -74,7 +79,9 @@ angular.module('risevision.displaysApp', [
 
       .state('display.add', {
         url: '/display/add',
-        templateUrl: 'partials/display-add.html',
+        templateProvider: ['$templateCache', function ($templateCache) {
+          return $templateCache.get('partials/display-add.html');
+        }],
         controller: 'displayAdd',
         resolve: {
           canAccessDisplays: ['canAccessDisplays',
