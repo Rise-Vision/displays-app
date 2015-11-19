@@ -16,6 +16,8 @@
     .constant('LOCALES_PREFIX', 'locales/translation_')
     .constant('LOCALES_SUFIX', '.json');
 
-  angular.module('risevision.displaysApp.config', []);
+  angular.module('risevision.displaysApp.config', [])
+    .value('ALERTS_WS_URL',
+      'https://rvaserver2.appspot.com/alerts/cap');
 
 })(angular);

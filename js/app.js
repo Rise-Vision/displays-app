@@ -10,6 +10,8 @@ angular.module('risevision.displaysApp', [
     'risevision.common.components.focus-me',
     'risevision.common.components.confirm-instance',
     'risevision.common.components.analytics',
+    'risevision.common.components.distribution-selector',
+    'risevision.common.components.presentation-selector',
     'ngTouch',
     'ui.bootstrap',
     'ui.bootstrap.showErrors',
@@ -83,6 +85,21 @@ angular.module('risevision.displaysApp', [
           return $templateCache.get('partials/display-add.html');
         }],
         controller: 'displayAdd',
+        resolve: {
+          canAccessDisplays: ['canAccessDisplays',
+            function (canAccessDisplays) {
+              return canAccessDisplays();
+            }
+          ]
+        }
+      })
+
+      .state('display.alerts', {
+        url: '/alerts',
+        templateProvider: ['$templateCache', function ($templateCache) {
+          return $templateCache.get('partials/alerts.html');
+        }],
+        controller: 'AlertsCtrl',
         resolve: {
           canAccessDisplays: ['canAccessDisplays',
             function (canAccessDisplays) {

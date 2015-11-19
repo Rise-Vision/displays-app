@@ -20,6 +20,8 @@
   angular.module('risevision.displaysApp.config', [])
     .value('STORAGE_API_ROOT',
       'https://storage-dot-rvacore-test.appspot.com/_ah/api')
+    .value('ALERTS_WS_URL',
+      'https://rvacore-test.appspot.com/alerts/cap')
     .value('CORE_URL', 'https://rvacore-test.appspot.com/_ah/api'); // override default core value
 
 })(angular);
