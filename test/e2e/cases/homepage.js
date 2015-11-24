@@ -42,6 +42,11 @@ var HomePageScenarios = function() {
         expect(commonHeaderPage.getCommonHeaderMenuItems().get(0).getText()).to.eventually.equal('Displays');
       });
 
+      it('should have Alerts menu item on the common header', function () {
+        expect(commonHeaderPage.getCommonHeaderMenuItems().get(1).isPresent()).to.eventually.be.true;
+        expect(commonHeaderPage.getCommonHeaderMenuItems().get(1).getText()).to.eventually.equal('Alerts');
+      });
+
       it('should go to home when clicking on Displays menu item', function () {
         commonHeaderPage.getCommonHeaderMenuItems().get(0).click();
         expect(browser.getCurrentUrl()).to.eventually.contain(homepage.getUrl());

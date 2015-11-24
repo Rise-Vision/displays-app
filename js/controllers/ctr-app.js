@@ -1,13 +1,22 @@
 'use strict';
 
 angular.module('risevision.displaysApp.controllers')
-  .controller('AppCtrl', ['$scope', '$location',
-    function ($scope, $rootScope, $location) {
+  .controller('AppCtrl', ['$scope', '$rootScope', '$state',
+    function ($scope, $rootScope, $state) {
       $scope.navOptions = [{
         title: 'Displays',
         link: '#/',
-        states: ['root.common.displays']
+        states: ['display.root', 'display.list', 'display.add',
+          'display.details'
+        ]
+      }, {
+        title: 'Alerts',
+        link: '#/alerts',
+        states: ['display.alerts']
       }];
-      $scope.navSelected = 'root.common.displays';
+      $scope.navSelected = 'display.root';
+      $rootScope.$on('$stateChangeSuccess', function () {
+        $scope.navSelected = $state.current.name;
+      });
     }
   ]); //ctr
