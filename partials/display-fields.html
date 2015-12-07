@@ -65,8 +65,8 @@
     <div class="col-md-3">
       <div class="form-group">
         <label class="control-label" translate>displays-app.fields.address.country.name</label>
-        <select class="form-control" ng-model="display.country" ng-options="c[1] as c[0] for c in countries">
-          <option value="" translate>displays-app.fields.address.country.placeholder</option>
+        <select class="form-control" ng-model="display.country" ng-options="c.code as c.name for c in countries" empty-select-parser>
+          <option value="" ng-show="false" translate>displays-app.fields.address.country.placeholder</option>
         </select>
       </div>
     </div>
@@ -74,11 +74,11 @@
       <div class="form-group">
         <label class="control-label" translate>displays-app.fields.address.province.name</label>
         <input type="text" class="form-control" ng-model="display.province" ng-hide="display.country == 'US' || display.country == 'CA'" />
-        <select class="form-control selectpicker" ng-model="display.province" ng-options="c[1] as c[0] for c in regionsCA" ng-show="display.country == 'CA'">
-          <option value="" translate>displays-app.fields.address.province.provincePlaceholder</option>
+        <select class="form-control selectpicker" ng-model="display.province" ng-options="c[1] as c[0] for c in regionsCA" ng-show="display.country == 'CA'" empty-select-parser>
+          <option value="" ng-show="false" translate>displays-app.fields.address.province.provincePlaceholder</option>
         </select>
-        <select class="form-control selectpicker" ng-model="display.province" ng-options="c[1] as c[0] for c in regionsUS" ng-show="display.country == 'US'">
-          <option value="" translate>displays-app.fields.address.province.statePlaceholder</option>
+        <select class="form-control selectpicker" ng-model="display.province" ng-options="c[1] as c[0] for c in regionsUS" ng-show="display.country == 'US'" empty-select-parser>
+          <option value="" ng-show="false" translate>displays-app.fields.address.province.statePlaceholder</option>
         </select>
       </div>
     </div>
@@ -93,7 +93,7 @@
   <div class="form-group">
     <label class="control-label" translate>displays-app.fields.address.timezone.name</label>
     <select class="form-control" ng-model="display.timeZoneOffset" ng-options="c[1] as c[0] for c in timezones" integer-parser>
-      <option value="" translate>displays-app.fields.address.timezone.placeholder</option>
+      <option value="" ng-show="false" translate>displays-app.fields.address.timezone.placeholder</option>
     </select>
   </div>
   <hr>
