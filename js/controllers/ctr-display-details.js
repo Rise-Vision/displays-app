@@ -130,6 +130,8 @@ angular.module('risevision.displaysApp.controllers')
       };
 
       $scope.save = function () {
+        displayTracker('Save Display', $scope.displayId, $scope.display ?
+          $scope.display.name : undefined);
         var deferred = $q.defer();
 
         if (!$scope.displayDetails.$valid) {

@@ -66,24 +66,24 @@ angular.module('risevision.displaysApp', [
 
       .state('display.change', {
         url: '/display/change/:displayId/:companyId',
-        controller: ['canAccessDisplays', 'userState', '$stateParams', 
+        controller: ['canAccessDisplays', 'userState', '$stateParams',
           '$state', '$location',
           function (canAccessDisplays, userState, $stateParams, $state,
-          $location) {
-            return canAccessDisplays().then(function() {
-              if (userState.getSelectedCompanyId() !== $stateParams.companyId) {
-                return userState.switchCompany($stateParams.companyId);
-              }
-              else {
-                return true;
-              }
-            })
-            .then(function() {
-              $location.replace();
-              $state.go('display.details', {
-                displayId: $stateParams.displayId
+            $location) {
+            return canAccessDisplays().then(function () {
+                if (userState.getSelectedCompanyId() !== $stateParams
+                  .companyId) {
+                  return userState.switchCompany($stateParams.companyId);
+                } else {
+                  return true;
+                }
+              })
+              .then(function () {
+                $location.replace();
+                $state.go('display.details', {
+                  displayId: $stateParams.displayId
+                });
               });
-            });
           }
         ]
       })

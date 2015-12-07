@@ -25,6 +25,8 @@ angular.module('risevision.displaysApp.controllers')
       });
 
       $scope.save = function (id, comment, toggleStatus) {
+        displayTracker('Save Display', null, $scope.display ? $scope.display
+          .name : undefined);
         if (!$scope.displayDetails.$valid) {
           $log.error('form not valid: ', $scope.displayDetails.errors);
           return;
