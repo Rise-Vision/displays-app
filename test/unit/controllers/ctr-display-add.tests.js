@@ -116,6 +116,7 @@ describe('controller: display add', function() {
     $scope.displayDetails.$valid = true;
     $scope.display = {id:123};
     $scope.save();
+    expect(trackerCalled).to.equal('Save Display');
     expect($scope.savingDisplay).to.be.true;
     $scope.$digest();
     $loadingStartSpy.should.have.been.calledWith('displays-loader');
@@ -136,9 +137,10 @@ describe('controller: display add', function() {
     $scope.displayDetails = {};
     $scope.displayDetails.$valid = true;
     $scope.save();
+    expect(trackerCalled).to.equal('Save Display');
     setTimeout(function(){
       expect($state._state).to.be.empty;
-      expect(trackerCalled).to.not.be.ok;
+      expect(trackerCalled).to.not.equal('Display Created');
       expect($scope.savingDisplay).to.be.false;
       expect($scope.submitError).to.be.ok;
       done();
